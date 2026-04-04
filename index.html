@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rota Vicentina — Fisherman's Trail Guide</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #1e3a5f;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  nav {
+    height: 52px;
+    background: #1e3a5f;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 4px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  nav .brand {
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-right: 24px;
+    letter-spacing: -0.01em;
+  }
+  nav .brand span { font-weight: 400; opacity: 0.7; }
+  nav a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+  }
+  nav a:hover { color: white; background: rgba(255,255,255,0.08); }
+  nav a.active {
+    color: white;
+    background: rgba(255,255,255,0.15);
+  }
+  iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: #faf9f6;
+  }
+  @media (max-width: 480px) {
+    nav .brand { font-size: 0.85rem; margin-right: 12px; }
+    nav a { font-size: 0.8rem; padding: 6px 10px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">Rota Vicentina <span>Apr 2026</span></div>
+  <a href="#" class="active" onclick="switchTab('itinerary', this)">Itinerary</a>
+  <a href="#" onclick="switchTab('map', this)">Map</a>
+</nav>
+<iframe id="content" src="itinerary.html"></iframe>
+<script>
+function switchTab(page, el) {
+  document.getElementById('content').src = page + '.html';
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

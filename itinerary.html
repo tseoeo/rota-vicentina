@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rota Vicentina Fisherman's Trail — Day-by-Day Guide</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --text: #2c2c2c;
+    --muted: #6b6b6b;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --warning: #b45309;
+    --warning-bg: #fef3c7;
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+    --success: #16a34a;
+    --success-bg: #dcfce7;
+    --border: #e5e5e5;
+    --card-bg: #fff;
+    --section-bg: #f5f5f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: white;
+    padding: 48px 20px 40px;
+    text-align: center;
+  }
+  header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+  header p { font-size: 0.95rem; opacity: 0.85; }
+  header .dates { font-size: 1.05rem; opacity: 1; margin-top: 8px; font-weight: 500; }
+
+  /* Quick ref bar */
+  .quick-ref {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    justify-content: center;
+    font-size: 0.85rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .quick-ref span { white-space: nowrap; }
+  .quick-ref strong { color: var(--accent); }
+
+  /* Nav */
+  nav {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+  }
+  nav a {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 2px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  nav a:hover { background: var(--accent-light); color: var(--accent); }
+
+  /* Day sections */
+  .day {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .day:last-child { border-bottom: none; }
+  .day-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .day-number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .day-date {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .day h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .day-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .day-stats .hard { color: var(--danger); font-weight: 600; }
+  .day-stats .moderate { color: var(--warning); font-weight: 600; }
+
+  /* Sub-sections */
+  h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 24px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 16px 0 6px;
+  }
+
+  /* Alerts */
+  .alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    margin: 12px 0;
+    line-height: 1.5;
+  }
+  .alert-warning { background: var(--warning-bg); color: var(--warning); border-left: 3px solid var(--warning); }
+  .alert-danger { background: var(--danger-bg); color: var(--danger); border-left: 3px solid var(--danger); }
+  .alert-info { background: var(--accent-light); color: #1e40af; border-left: 3px solid var(--accent); }
+  .alert-success { background: var(--success-bg); color: #166534; border-left: 3px solid var(--success); }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 8px 0 16px;
+  }
+  th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 6px 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  td strong { color: var(--text); }
+
+  /* Lists */
+  ul { padding-left: 20px; margin: 6px 0; }
+  li { margin: 4px 0; font-size: 0.9rem; }
+
+  /* Accommodation card */
+  .accommodation {
+    background: var(--accent-light);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.88rem;
+  }
+  .accommodation strong { color: #1e40af; }
+
+  /* Highlight */
+  .highlight {
+    background: var(--section-bg);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.88rem;
+  }
+
+  /* Practical section at top */
+  .practical {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .practical h2 { font-size: 1.2rem; margin-bottom: 16px; }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+  .info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+  }
+  .info-card h4 { margin: 0 0 4px; font-size: 0.85rem; }
+  .info-card p { color: var(--muted); margin: 0; }
+
+  /* Town guide */
+  .town-section {
+    background: var(--section-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+  .town-section h3 { border-bottom-color: #d5d5c8; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.4rem; }
+    .day h2 { font-size: 1.15rem; }
+    .quick-ref { font-size: 0.78rem; gap: 8px 16px; }
+    table { font-size: 0.8rem; }
+    td, th { padding: 6px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Rota Vicentina Fisherman's Trail</h1>
+    <p>Porto Covo to Lagos &middot; 11 Stages &middot; ~213 km</p>
+    <p class="dates">15 &ndash; 26 April 2026</p>
+  </div>
+</header>
+
+<div class="quick-ref">
+  <span><strong>212 km</strong> total</span>
+  <span><strong>11</strong> stages</span>
+  <span><strong>17&ndash;20&deg;C</strong> days</span>
+  <span><strong>20:20&ndash;20:32</strong> sunsets</span>
+  <span><strong>15&ndash;16&deg;C</strong> sea</span>
+  <span><a href="map.html" style="color:var(--accent);text-decoration:underline">Open Map &rarr;</a></span>
+</div>
+
+<nav>
+  <a href="#practical">Practical</a>
+  <a href="#day1">D1</a><a href="#day2">D2</a><a href="#day3">D3</a><a href="#day4">D4</a>
+  <a href="#day5">D5</a><a href="#day6">D6</a><a href="#day7">D7</a><a href="#day8">D8</a>
+  <a href="#day9">D9</a><a href="#day10">D10</a><a href="#day11">D11</a>
+</nav>
+
+<div class="container">
+
+<!-- ============ PRACTICAL INFO ============ -->
+<section class="practical" id="practical">
+<h2>Practical Info</h2>
+
+<div class="grid-2">
+  <div class="info-card">
+    <h4>Weather</h4>
+    <p>17&ndash;20&deg;C days, 11&ndash;13&deg;C nights. Wind is the #1 factor (15&ndash;25 km/h, gusts to 50). Expect 3&ndash;5 rain episodes. Fog mornings burning off by 10:00. UV 6&ndash;8.</p>
+  </div>
+  <div class="info-card">
+    <h4>Essentials to Carry</h4>
+    <p>2L+ water, windproof layer, rain jacket, sunscreen SPF 30&ndash;50, hat, packed lunch on remote days. Quick-dry towel for beach dips.</p>
+  </div>
+  <div class="info-card">
+    <h4>Tides Matter</h4>
+    <p>Critical on Days 4 (Seixe river), 5 (Amoreira), 7 (Bordeira beach), 10 (Furnas-Figueira). Check tide tables nightly: Sines station (Days 1&ndash;4), Sagres station (Days 8&ndash;11).</p>
+  </div>
+  <div class="info-card">
+    <h4>25 April &mdash; Dia da Liberdade</h4>
+    <p>National holiday. Banks &amp; small shops closed. Large supermarkets open (reduced hours). Restaurants open. Stock up on 24 April. Lagos may have a concert at Pra&ccedil;a Gil Eanes.</p>
+  </div>
+  <div class="info-card">
+    <h4>Mobile Coverage</h4>
+    <p>Generally OK with MEO/NOS. Expect 2&ndash;4 hr dead zones on remote stages. Download offline maps + GPX tracks. GPS works without signal.</p>
+  </div>
+  <div class="info-card">
+    <h4>Cash</h4>
+    <p>Almograve and Carrapateira have NO ATMs. Some places don't take cards. Carry cash from larger towns.</p>
+  </div>
+</div>
+
+<div class="alert alert-warning" style="margin-top:16px">
+  <strong>Worst service gaps (carry extra water + food):</strong> Day 1: 12&ndash;14 km gap &middot; Day 3: 14 km gap &middot; Day 7: 14 km gap &middot; Day 8: 13 km gap &middot; Day 9: 12.6 km gap
+</div>
+</section>
+
+<!-- ============ DAY 1 ============ -->
+<section class="day" id="day1">
+<div class="day-header">
+  <span class="day-number">Day 1</span>
+  <span class="day-date">Tue 15 April</span>
+</div>
+<h2>Porto Covo &rarr; Vila Nova de Milfontes</h2>
+<div class="day-stats">
+  <span>19.4 km</span>
+  <span>5h 08m</span>
+  <span>+160m / -156m</span>
+  <span class="hard">Hard (deep sand)</span>
+</div>
+
+<div class="alert alert-danger">
+  <strong>Service gap:</strong> After Restaurante A Ilha (~km 4), NO water, food, or shade for 12&ndash;14 km until Porto das Barcas. Carry 2L+ water and packed lunch.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Praia dos Buizinhos</strong> &mdash; Porto Covo's iconic postcard cove with viewpoint above</li>
+  <li><strong>Ilha do Pessegueiro</strong> &mdash; 17th-c fortress ruins on island 250m offshore; mainland fort with free access</li>
+  <li><strong>White storks on sea cliffs</strong> (between Aivados and Malh&atilde;o) &mdash; the only place in the world where storks nest on marine cliffs. Active nesting in April</li>
+  <li><strong>Freshwater springs at Nascedios</strong> &mdash; groundwater emerges through the dune system</li>
+  <li><strong>Mira Estuary panorama</strong> (~km 17) &mdash; first view of VN Milfontes. One of the trail's best moments</li>
+  <li><strong>Forte de S&atilde;o Clemente</strong> &mdash; 1602 fortress at river mouth</li>
+</ul>
+<p style="font-size:0.85rem;color:var(--muted);margin-top:8px">Beaches along the way: Buizinhos, Engardaceira, Sissal, Ilha do Pessegueiro, Aivados, Saltinho, Nascedios, Malh&atilde;o, Franquia (calm river beach at end).</p>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Porto Covo village (cafes, minimarket)</td><td>0</td><td>Open year-round</td></tr>
+  <tr><td><strong>Restaurante A Ilha</strong> (Pessegueiro Fort)</td><td>~4</td><td>Likely open. Tel: +351 269 905 113</td></tr>
+  <tr><td><strong>Restaurante Porto das Barcas</strong></td><td>~17</td><td>Likely open. Tel: +351 283 997 160</td></tr>
+  <tr><td>VN Milfontes (full town)</td><td>~20</td><td>Full services</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Vila Nova de Milfontes &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>Casa das Marias</strong> &middot; Travessa Santa Maria n 4 &middot; Check-in 15:00&ndash;18:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>Tasca do Celso</strong></td><td>Most acclaimed. Grilled fish, cataplanas, arroz de marisco. Reservations recommended.</td><td>~15&ndash;30/pp</td></tr>
+    <tr><td><strong>Porto das Barcas</strong></td><td>Scenic riverside terrace. Percebes, clams, grilled fish.</td><td>~15&ndash;35/pp</td></tr>
+    <tr><td><strong>A Fateixa</strong></td><td>Waterfront. Arroz de lingueir&atilde;o (razor clam rice), grilled sardines.</td><td>~12&ndash;25/pp</td></tr>
+    <tr><td><strong>Ritamar</strong></td><td>Family-run old town. Petiscos, fresh fish, Alentejo wines.</td><td>~12&ndash;25/pp</td></tr>
+  </table>
+  <h4>Morning Coffee (for Day 2)</h4>
+  <p style="font-size:0.88rem"><strong>Pastelaria Golfinho</strong> (opens ~7:30) or <strong>Caf&eacute; Central</strong> on main square. Grab trail sandwiches at Pastelaria Milfontes.</p>
+  <h4>Shops</h4>
+  <p style="font-size:0.88rem"><strong>Minipreco</strong> (Rua dos Aviadores) for basics. <strong>Intermarch&eacute;</strong> on outskirts for full stock-up.</p>
+  <h4>Sights &amp; Evening</h4>
+  <ul>
+    <li><strong>Forte de S&atilde;o Clemente</strong> &mdash; exterior freely accessible, outstanding estuary views</li>
+    <li><strong>Sunset at Praia do Farol / North Beach cliffs</strong> &mdash; walk north from castle, best sunset spot</li>
+    <li>Bars along Rua dos Aviadores &mdash; Alentejo wines, low-key in shoulder season</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============ DAY 2 ============ -->
+<section class="day" id="day2">
+<div class="day-header">
+  <span class="day-number">Day 2</span>
+  <span class="day-date">Wed 16 April</span>
+</div>
+<h2>Vila Nova de Milfontes &rarr; Almograve</h2>
+<div class="day-stats">
+  <span>15.4 km</span>
+  <span>4h 06m</span>
+  <span>+171m / -154m</span>
+  <span class="moderate">Moderate</span>
+</div>
+
+<div class="alert alert-info">
+  <strong>River crossing:</strong> Rio Mira ferry (~5&euro;, ~10 min) departs below Forte de S&atilde;o Clemente. Operator: Taxi Boat Maresia +351 963 033 289 &mdash; call day before. Backup: road bridge (+3.5 km).
+</div>
+
+<div class="alert alert-warning">
+  <strong>Service gap:</strong> After Furnas (~km 4&ndash;5), NO water/food/shade for ~11 km until Almograve beach bar.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Praia das Furnas</strong> &mdash; voted one of "7 Wonders of Portugal" beaches. Dual aspect: calm estuary + Atlantic</li>
+  <li><strong>Praia do Brejo Largo</strong> &mdash; highlight of stage. Crystal-clear turquoise water. Cliff stairs with rope assist</li>
+  <li><strong>Brejo Largo cliff overlook</strong> &mdash; one of the most photographed viewpoints on the entire trail</li>
+  <li><strong>Reddish sandstone and dark schist cliffs</strong> at Almograve &mdash; striking geological contrasts</li>
+  <li>White storks still visible on sea cliff nests</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>VN Milfontes (start)</td><td>0</td><td>Full services</td></tr>
+  <tr><td><strong>Restaurante Oasis</strong> (Praia das Furnas)</td><td>~4</td><td>Year-round, closed Thu. Tel: +351 283 998 020</td></tr>
+  <tr><td><strong>Bar da Praia</strong> (Almograve beach)</td><td>~14</td><td>Open Mar&ndash;Oct</td></tr>
+  <tr><td>Almograve village</td><td>~15</td><td>Open year-round</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Almograve &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>Casa do Mar</strong> &middot; R. do Moinho 4A &middot; Check-in 15:00&ndash;18:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>Restaurante O Tarro</strong></td><td>The restaurant in town. Family-run, fresh fish, arroz de marisco. Hiker highlight.</td><td>~15&ndash;25/pp</td></tr>
+    <tr><td><strong>Cervejaria Sever</strong></td><td>Grilled meats, petiscos. Casual backup.</td><td>~12&ndash;22/pp</td></tr>
+  </table>
+  <div class="alert alert-warning">Very small village. Only 2&ndash;3 restaurants, 1 cafe, 1 mini-market. <strong>No ATM</strong> &mdash; bring cash. Stock up in Milfontes.</div>
+  <h4>Morning Coffee (for Day 3)</h4>
+  <p style="font-size:0.88rem"><strong>Caf&eacute;/Bar Central</strong> &mdash; the one cafe. Opens ~8:00. Consider carrying instant coffee for early starts.</p>
+  <h4>Evening</h4>
+  <ul>
+    <li><strong>Sunset at the cliffs</strong> north of beach &mdash; west-facing Atlantic, dramatic schist formations</li>
+    <li>Excellent <strong>stargazing</strong> &mdash; minimal light pollution</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============ DAY 3 ============ -->
+<section class="day" id="day3">
+<div class="day-header">
+  <span class="day-number">Day 3</span>
+  <span class="day-date">Thu 17 April</span>
+</div>
+<h2>Almograve &rarr; Zambujeira do Mar</h2>
+<div class="day-stats">
+  <span>22.1 km</span>
+  <span>5h 55m</span>
+  <span>+251m / -252m</span>
+  <span class="hard">Hard (length + terrain)</span>
+</div>
+
+<div class="alert alert-danger">
+  <strong>Service gap:</strong> After Almograve, NO water/food/shade for ~14 km until Cavaleiro village. Carry 2L+ and packed lunch.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Cabo Sard&atilde;o lighthouse</strong> &mdash; 360&deg; panorama, THE spot for cliff-nesting white storks. Active nesting in April</li>
+  <li><strong>Praia da Am&aacute;lia</strong> &mdash; named after fado legend. Features Cascata das Cobras (Snake Waterfall)</li>
+  <li><strong>Praia dos Alteirinhos</strong> &mdash; wild beach with cave</li>
+  <li>Peak wildflower season &mdash; rockrose, sea thrift, wild orchids, thyme</li>
+  <li>Two-tone cliffs: Paleozoic schist with red sandstone overlays</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Almograve village</td><td>0</td><td>Open year-round</td></tr>
+  <tr><td><strong>Cavaleiro village (Snack-bar Ad&eacute;lia)</strong></td><td>~14</td><td>Year-round. Cafe with terrace.</td></tr>
+  <tr><td><strong>Carvalhal Beach Nature</strong> snack bar</td><td>~19</td><td>Open daily 09:30&ndash;20:30</td></tr>
+  <tr><td>Zambujeira do Mar</td><td>~22</td><td>Full services</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Zambujeira do Mar &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>Breathe In</strong> &middot; Rua Nossa Senhora do Mar 62 &middot; Check-in 16:00&ndash;23:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>O Sacas</strong></td><td>One of the most acclaimed on this coast. Grilled fish, percebes, arroz de marisco. Closed Wednesdays.</td><td>~15&ndash;30/pp</td></tr>
+    <tr><td><strong>O Rui</strong></td><td>Cataplana, grilled seafood. Year-round.</td><td>~12&ndash;25/pp</td></tr>
+    <tr><td><strong>Luar da Foia</strong></td><td>Good prato do dia. Migas, carne de porco alentejana.</td><td>~10&ndash;18/pp</td></tr>
+  </table>
+  <h4>Sights &amp; Evening</h4>
+  <ul>
+    <li><strong>Forte da Zambujeira</strong> (ruins) &mdash; 17th-c coastal fort on cliff edge. Spectacular sunset viewpoint</li>
+    <li><strong>Praia da Zambujeira</strong> &mdash; dark schist cliffs, waterfall in spring</li>
+    <li>Excellent stargazing</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============ DAY 4 ============ -->
+<section class="day" id="day4">
+<div class="day-header">
+  <span class="day-number">Day 4</span>
+  <span class="day-date">Fri 18 April</span>
+</div>
+<h2>Zambujeira do Mar &rarr; Odeceixe</h2>
+<div class="day-stats">
+  <span>18.8 km</span>
+  <span>5h 13m</span>
+  <span>+311m / -328m</span>
+  <span class="hard">Hard (constant gully climbs)</span>
+</div>
+
+<div class="alert alert-info">
+  <strong>Tide note:</strong> Ribeira de Seixe can be forded at low tide (ankle/knee deep). Standard route goes via Odeceixe village bridge. Check tide tables.
+</div>
+
+<div class="alert alert-warning">
+  <strong>Service gap:</strong> After Azenha do Mar (~km 9.5), NO services for ~9 km to Odeceixe. Carry water and snacks.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Praia da Am&aacute;lia</strong> &mdash; Cascata das Cobras waterfall. Access through vegetation tunnel (crawl required)</li>
+  <li><strong>Ponta em Branco</strong> &mdash; THE viewpoint of this stage. White headland amid red/orange rocks. Alentejo-Algarve boundary. Most photographed point on the entire trail</li>
+  <li><strong>Praia de Odeceixe</strong> &mdash; spectacular horseshoe beach where Ribeira de Seixe meets Atlantic</li>
+  <li>Exotic animal farm visible from trail &mdash; zebras, ostriches, antelopes (surreal in a natural park)</li>
+  <li>Constant steep barrancos of 30&ndash;40m depth</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Zambujeira do Mar</td><td>0</td><td>Full services</td></tr>
+  <tr><td>Carvalhal Beach Nature bar</td><td>~3</td><td>Possibly open, call +351 919 846 209</td></tr>
+  <tr><td><strong>Restaurante A Azenha do Mar</strong></td><td>~9.5</td><td>Open Thu&ndash;Mon 09&ndash;22. <strong>Closed Wed.</strong> Apr 18 = Fri = OPEN. Fresh seafood.</td></tr>
+  <tr><td>Odeceixe village</td><td>18.8</td><td>Full services</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Odeceixe &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>AL-Odeceixe Verde</strong> &middot; 10 Rua Nova &middot; Check-in 15:00&ndash;19:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>Chaparro</strong></td><td>Popular village restaurant near your stay. Grilled fish, cataplana.</td><td>~10&ndash;20/pp</td></tr>
+    <tr><td><strong>Taberna do Gab&atilde;o</strong></td><td>Tavern-style. Petiscos, local wines.</td><td>~8&ndash;15/pp</td></tr>
+    <tr><td><strong>Dorita</strong></td><td>Traditional. Good grilled sardines.</td><td>~8&ndash;18/pp</td></tr>
+  </table>
+  <h4>Sights &amp; Evening</h4>
+  <ul>
+    <li><strong>Moinho de Odeceixe</strong> &mdash; restored windmill on hilltop. Panoramic views of village, river, coast. Great sunset spot (~20 min walk)</li>
+    <li><strong>Praia de Odeceixe cliff viewpoint</strong> &mdash; south side of beach, dramatic</li>
+    <li>Very low light pollution &mdash; excellent stargazing</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============ DAY 5 ============ -->
+<section class="day" id="day5">
+<div class="day-header">
+  <span class="day-number">Day 5</span>
+  <span class="day-date">Sat 19 April</span>
+</div>
+<h2>Odeceixe &rarr; Aljezur</h2>
+<div class="day-stats">
+  <span>22.5 km</span>
+  <span>5h 58m</span>
+  <span>+224m / -222m</span>
+  <span class="hard">Hard (longest stage)</span>
+</div>
+
+<div class="alert alert-info">
+  <strong>Tide note:</strong> Ribeira de Aljezur only crossable at low tide. At Praia da Amoreira, hikers sometimes wait for tide to drop. High-tide alternative: inland route via roads.
+</div>
+
+<div class="alert alert-warning">
+  <strong>Service gap:</strong> After Odeceixe beach (~km 3), NO services for ~11 km until Rogil. Carry 2L water.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Praia de Odeceixe</strong> &mdash; spectacular dual beach (river + ocean) at the start</li>
+  <li><strong>Praia do Vale dos Homens</strong> &mdash; beautiful beach via wooden boardwalk and staircase</li>
+  <li><strong>Carboniferous-era cliff formations</strong> &mdash; 300+ million year old intensely folded strata</li>
+  <li><strong>Castle of Aljezur</strong> &mdash; 10th-c Moorish castle with panoramic views (at end)</li>
+  <li>Possible <strong>European otter</strong> sightings at river mouths &mdash; Portugal's only marine otter population</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Odeceixe village</td><td>0</td><td>Open year-round</td></tr>
+  <tr><td><strong>Rogil village (Spar supermarket)</strong></td><td>~14</td><td>Critical resupply. Year-round.</td></tr>
+  <tr><td>Aljezur town</td><td>22.5</td><td>Full services</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Aljezur &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>FlorAL</strong> &middot; R. 25 de Abril 58 &middot; Check-in 15:30&ndash;21:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>Pont'a P&eacute;</strong></td><td>Popular local spot near bridge. Grilled fish, cataplana.</td><td>~10&ndash;18/pp</td></tr>
+    <tr><td><strong>O Paulo</strong></td><td>Long-standing favourite. Fresh fish, generous portions.</td><td>~10&ndash;15/pp</td></tr>
+    <tr><td><strong>Taberna do Gab&atilde;o</strong></td><td>Gastropub-style. Creative Algarve cuisine, good wine list.</td><td>~12&ndash;20/pp</td></tr>
+  </table>
+  <h4>Shops</h4>
+  <p style="font-size:0.88rem"><strong>Minipreco</strong> and <strong>Intermarch&eacute;</strong> both in town. <strong>Mercado Municipal</strong> Sat mornings. Best stock-up since Milfontes.</p>
+  <h4>Sights &amp; Evening</h4>
+  <ul>
+    <li><strong>Castelo de Aljezur</strong> (MUST VISIT) &mdash; 10th-c Moorish castle, free, stunning sunset views. ~10 min climb</li>
+    <li><strong>Museu Municipal</strong> &mdash; Islamic-period collections from castle excavations. Tue&ndash;Sat 10&ndash;13 &amp; 14&ndash;17</li>
+    <li>Atmospheric Moorish quarter below castle</li>
+  </ul>
+  <div class="alert alert-success"><strong>Aljezur Monday Market (20 April)</strong> &mdash; you arrive 19 April. If you have a morning before hiking, the monthly market is the next day.</div>
+</div>
+</section>
+
+<!-- ============ DAY 6 ============ -->
+<section class="day" id="day6">
+<div class="day-header">
+  <span class="day-number">Day 6</span>
+  <span class="day-date">Sun 20 April</span>
+</div>
+<h2>Aljezur &rarr; Praia da Arrifana</h2>
+<div class="day-stats">
+  <span>16.9 km</span>
+  <span>4h 40m</span>
+  <span>+301m / -247m</span>
+  <span class="moderate">Moderate</span>
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Praia da Amoreira</strong> &mdash; spectacular wide beach at Aljezur River mouth with tidal lagoon</li>
+  <li><strong>Praia de Monte Cl&eacute;rigo</strong> &mdash; picturesque hamlet with beach (key services stop at ~km 9)</li>
+  <li><strong>Ponta da Atalaia</strong> &mdash; 360&deg; views, can see from Cabo Sard&atilde;o to Cabo de S&atilde;o Vicente on clear days</li>
+  <li><strong>Ribat da Atalaia ruins</strong> &mdash; 12th-c Muslim fortress-monastery, only identified ribat in Portugal</li>
+  <li><strong>Fortaleza da Arrifana</strong> &mdash; ruined 1635 fortress on headland + Pedra da Agulha (Needle Rock) sea stack</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Aljezur town</td><td>0</td><td>Full services. Fill water here.</td></tr>
+  <tr><td><strong>Monte Cl&eacute;rigo</strong> (O Sargo, O Z&eacute;, Bar A Rede)</td><td>~9</td><td>Critical mid-trail stop. Should all be open.</td></tr>
+  <tr><td>Vale da Telha supermarket</td><td>~14</td><td>Year-round</td></tr>
+  <tr><td>Arrifana village</td><td>~17</td><td>Sea You Surf Cafe, Cal Arrifana, Taberna do Gabriel</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Vale da Telha / Arrifana &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>Endless Summer Surf House</strong> &middot; Vale da Telha &middot; Check-in 15:00&ndash;21:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>O Paulo</strong> (Arrifana)</td><td>Iconic cliffside. Renowned seafood, stunning views. One of the best on the Costa Vicentina.</td><td>~14&ndash;25/pp</td></tr>
+    <tr><td><strong>Bar da Fortaleza</strong></td><td>Near fort/viewpoint. Fresh fish, petiscos, panoramic views.</td><td>~10&ndash;18/pp</td></tr>
+    <tr><td><strong>S&iacute;tio do Forno</strong> (Vale da Telha)</td><td>Well-regarded, year-round.</td><td>~10&ndash;16/pp</td></tr>
+  </table>
+  <h4>Evening</h4>
+  <ul>
+    <li><strong>Sunset from Arrifana Fort Headland</strong> &mdash; the single best sunset spot in the area. Fort ruins silhouetted against Atlantic. Unforgettable.</li>
+    <li>Surf house social scene &mdash; communal areas, possibly BBQs</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============ DAY 7 ============ -->
+<section class="day" id="day7">
+<div class="day-header">
+  <span class="day-number">Day 7</span>
+  <span class="day-date">Mon 21 April</span>
+</div>
+<h2>Praia da Arrifana &rarr; Carrapateira</h2>
+<div class="day-stats">
+  <span>19.6 km</span>
+  <span>5h 19m</span>
+  <span>+257m / -306m</span>
+  <span class="hard">Hard (tide-dependent)</span>
+</div>
+
+<div class="alert alert-danger">
+  <strong>TIDE CRITICAL:</strong> Ribeira da Carrapateira at Praia da Bordeira &mdash; ankle/knee-deep at low tide, impassable at high. Plan to reach Bordeira (~km 18) within 2 hours of low tide. Alternative: inland pine forest path (+1.5 km).
+</div>
+
+<div class="alert alert-danger">
+  <strong>Service gap:</strong> After Arrifana (~km 0), NO reliable services for ~14 km. Carry 2L+ water and packed lunch. Fill up in Arrifana.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Praia da Bordeira</strong> &mdash; enormous 3 km wild beach. ~30 min barefoot crossing. Warm river lagoon behind beach</li>
+  <li><strong>100-metre cliffs</strong> near Pontal da Carrapateira</li>
+  <li>White storks on sea cliffs &mdash; 40+ cliff-nesting pairs, active in April</li>
+  <li>Upper Palaeozoic rocks (300+ million years) with dramatic folding and faulting</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Arrifana restaurants (Sea You Surf Cafe etc.)</td><td>0</td><td>Open. <strong>Last reliable water for 15&ndash;18 km.</strong></td></tr>
+  <tr><td>Bordeira village (Cantinho de Bordeira)</td><td>~16</td><td>May have drinks/snacks if open</td></tr>
+  <tr><td>Carrapateira village</td><td>~20</td><td>Microbar, Restaurante do Cabrita, minimarket</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Carrapateira &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>Casa D'Olivia</strong> &middot; Beco da Fe 5 &middot; Check-in 16:00&ndash;20:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>O S&iacute;tio do Rio</strong></td><td>Most popular. Excellent fresh fish and seafood, cataplana. A local institution.</td><td>~15&ndash;25/pp</td></tr>
+    <tr><td><strong>A Esquina</strong></td><td>Family-run Algarvian. Year-round.</td><td>~12&ndash;20/pp</td></tr>
+  </table>
+  <div class="alert alert-warning"><strong>No ATM</strong> in Carrapateira. Bring cash from Aljezur.</div>
+  <h4>Sights &amp; Evening</h4>
+  <ul>
+    <li><strong>Pontal da Carrapateira headland</strong> &mdash; arguably the <strong>single best sunset viewpoint on the entire trail</strong>. Wildflower-covered in April. ~2 km walk. Boardwalk loop ~5.5 km</li>
+    <li><strong>Museu do Mar e da Terra</strong> &mdash; excellent small museum on fishing traditions</li>
+    <li><strong>Torre de Aspa</strong> &mdash; ancient watchtower ruins, 360&deg; views</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============ DAY 8 ============ -->
+<section class="day" id="day8">
+<div class="day-header">
+  <span class="day-number">Day 8</span>
+  <span class="day-date">Tue 22 April</span>
+</div>
+<h2>Carrapateira &rarr; Vila do Bispo</h2>
+<div class="day-stats">
+  <span>15.4 km</span>
+  <span>4h 21m</span>
+  <span>+331m / -259m</span>
+  <span class="hard">Hard</span>
+</div>
+
+<div class="alert alert-danger">
+  <strong>Service gap:</strong> After Praia do Amado beach bar (~km 2.5), NO water/food/shade for ~13 km to Vila do Bispo. Critical. Carry 2L+ and food.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Praia do Amado</strong> &mdash; major surf beach with beach bar + toilets. Last services for 13 km</li>
+  <li><strong>Ponta do Castelo Islamic ruins</strong> &mdash; 12th&ndash;13th century Almohad fishing settlement, 15 excavated buildings. Directly on trail</li>
+  <li><strong>Pena Furada</strong> &mdash; "Pierced rock" natural arches &mdash; geological highlight of the stage</li>
+  <li>Coast-to-interior transition at ~km 8.5</li>
+  <li>~100m elevation changes at Pena Furada &mdash; steepest terrain of the stage</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Carrapateira village</td><td>0</td><td>Open year-round</td></tr>
+  <tr><td><strong>S&iacute;tio do Forno</strong> restaurant</td><td>~1.7</td><td>Cliff-top, year-round</td></tr>
+  <tr><td><strong>Praia do Amado beach bar</strong></td><td>~2.5</td><td>Last services before Vila do Bispo</td></tr>
+  <tr><td>Vila do Bispo</td><td>15.4</td><td>Full services</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Vila do Bispo &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>Hotel Mira Sagres</strong> &middot; Rua 1 De Maio 3 &middot; Check-in 16:00&ndash;23:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>Eira do Mel</strong></td><td>Most praised. Traditional Algarvian, grilled fish, cataplana, octopus.</td><td>~15&ndash;30/pp</td></tr>
+    <tr><td><strong>A Eira</strong></td><td>Simple, family-run. Good value.</td><td>~10&ndash;20/pp</td></tr>
+    <tr><td><strong>Hotel Mira Sagres restaurant</strong></td><td>Convenient after a tiring day.</td><td>~12&ndash;25/pp</td></tr>
+  </table>
+  <h4>Sights &amp; Evening</h4>
+  <ul>
+    <li><strong>Igreja Matriz</strong> &mdash; notable azulejo-tiled interior, among the finest in western Algarve</li>
+    <li><strong>Capela de N.S. de Guadalupe</strong> &mdash; 13th-c Gothic chapel ~2 km east. Prince Henry the Navigator prayed here. National Monument</li>
+    <li><strong>Sunset at Cabo de S&atilde;o Vicente</strong> &mdash; drive ~15 min to the cape for one of Europe's most dramatic sunsets</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============ DAY 9 ============ -->
+<section class="day" id="day9">
+<div class="day-header">
+  <span class="day-number">Day 9</span>
+  <span class="day-date">Wed 23 April</span>
+</div>
+<h2>Vila do Bispo &rarr; Sagres</h2>
+<div class="day-stats">
+  <span>20.9 km</span>
+  <span>5h 41m</span>
+  <span>+224m / -285m</span>
+  <span class="hard">Hard</span>
+</div>
+
+<div class="alert alert-danger">
+  <strong>Service gap:</strong> After Vila do Bispo, ZERO water/food/shade for ~12.6 km to the S&atilde;o Vicente area. Flat farmland then exposed cliffs. Carry 2L+ water.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Torre de Aspa</strong> &mdash; highest sea cliff on Algarve coast (157m). Ruined watchtower. Views N to Cordoama, S to S&atilde;o Vicente</li>
+  <li><strong>Praia do Telheiro</strong> &mdash; internationally recognized geoheritage site. Angular unconformity: vertical Carboniferous turbidites beneath flat Triassic sandstone. Worth descending to see</li>
+  <li><strong>Cabo de S&atilde;o Vicente</strong> &mdash; southwesternmost point of mainland Europe. 75m cliffs. Powerful lighthouse. Sacred since Roman times</li>
+  <li><strong>Forte do Beliche</strong> &mdash; 16th-c clifftop fortress, dramatic setting</li>
+  <li><strong>Fortaleza de Sagres</strong> &mdash; Prince Henry the Navigator's fortress. Rosa dos Ventos (43m wind compass). ~3&euro; entry</li>
+  <li>Red-billed Chough &mdash; rare crow species on the cliffs</li>
+  <li>Endemic flora found nowhere else: <em>Cistus palhinhae</em>, <em>Biscutella vicentina</em></li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Vila do Bispo</td><td>0</td><td><strong>Fill all water here.</strong></td></tr>
+  <tr><td><strong>S&atilde;o Vicente Spot caf&eacute;</strong></td><td>~12.6</td><td>Seasonal, should be open mid-April</td></tr>
+  <tr><td><strong>Cabo de S&atilde;o Vicente food trucks</strong></td><td>~14</td><td>"Letzte Bratwurst vor Amerika" + others. ~4&euro;.</td></tr>
+  <tr><td>Sagres town</td><td>20.9</td><td>Full services</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Sagres &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>Pontalaia Apartamentos</strong> &middot; Rua Patr&atilde;o Antonio Faustino &middot; Check-in 16:00&ndash;00:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>Vila Velha</strong></td><td>Upscale. Creative Portuguese, good wine list, terrace dining.</td><td>~25&ndash;40/pp</td></tr>
+    <tr><td><strong>A Casinha</strong></td><td>Small, cosy. Excellent grilled fish and shellfish. Book ahead.</td><td>~15&ndash;30/pp</td></tr>
+    <tr><td><strong>A Sagres</strong></td><td>Local favourite. Grilled fish, cataplana. Family-run, generous.</td><td>~15&ndash;25/pp</td></tr>
+    <tr><td><strong>Mum's</strong></td><td>Popular with hikers/surfers. Good steaks and fresh fish.</td><td>~12&ndash;22/pp</td></tr>
+  </table>
+  <h4>Shops</h4>
+  <p style="font-size:0.88rem"><strong>Intermarch&eacute; Sagres</strong> &mdash; largest supermarket. <strong>Pau de Pita</strong> bakery for trail sandwiches.</p>
+  <h4>Sights &amp; Evening</h4>
+  <ul>
+    <li><strong>Fortaleza de Sagres</strong> &mdash; open 9:30&ndash;17:30 in shoulder season. ~3&euro;. Rosa dos Ventos, sheer cliffs, seabirds</li>
+    <li><strong>Sunset at Cabo de S&atilde;o Vicente</strong> &mdash; THE evening activity. "O Fim do Mundo." Drive ~10 min. Bring windbreaker</li>
+    <li><strong>&Aacute;gua Salgada Bar</strong> &mdash; lively bar, live music some nights. <strong>Dromedario</strong> &mdash; cafe by day, bar by evening</li>
+  </ul>
+  <div class="alert alert-info"><strong>Stock up tomorrow (24 April)</strong> for Day 11 &mdash; 25 April is a national holiday, small shops may close.</div>
+</div>
+</section>
+
+<!-- ============ DAY 10 ============ -->
+<section class="day" id="day10">
+<div class="day-header">
+  <span class="day-number">Day 10</span>
+  <span class="day-date">Thu 24 April</span>
+</div>
+<h2>Sagres &rarr; Praia da Salema</h2>
+<div class="day-stats">
+  <span>18.7 km</span>
+  <span>5h 16m</span>
+  <span>+310m / -330m</span>
+  <span class="hard">Hard</span>
+</div>
+
+<div class="alert alert-info">
+  <strong>Tide note:</strong> Between Furnas and Figueira beaches, rocky formations can block beach passage at high tide. Cliff-top alternative exists. One hiker reported waiting 2+ hours for tide to recede.
+</div>
+
+<div class="alert alert-warning">
+  <strong>Service gap:</strong> After Zavial (~km 10.7), NO services for ~9 km to Salema. Hardest terrain section. Carry water.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Praia da Ingrina</strong> &mdash; sheltered cove with year-round restaurant</li>
+  <li><strong>Praia do Zavial</strong> &mdash; popular surf beach with year-round restaurant</li>
+  <li><strong>Martinhal Lagoon</strong> &mdash; birdwatching spot</li>
+  <li>Cliff-nesting white storks actively nesting</li>
+  <li>12+ endemic plant species including endangered <em>Cistus palhinhae</em></li>
+  <li>Miocene limestone geology with natural arches and sea caves</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Sagres town</td><td>0</td><td>Full services</td></tr>
+  <tr><td><strong>Nortada Beach Bar</strong> (Martinhal)</td><td>~1.7</td><td>Open in season</td></tr>
+  <tr><td><strong>Restaurante do Sebasti&atilde;o</strong> (Ingrina)</td><td>~10</td><td>Year-round. <strong>Cash only. Closed Tue.</strong> Apr 24 = Thu = OPEN.</td></tr>
+  <tr><td><strong>Restaurante Zavial</strong></td><td>~10.7</td><td>Year-round. <strong>Cash only. Closed Mon.</strong></td></tr>
+  <tr><td>Salema village</td><td>~18.7</td><td>Restaurants, small supermarket</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Salema &mdash; Overnight</h3>
+  <div class="accommodation">
+    <strong>NAU Salema Beach Village</strong> &middot; Praia da Salema &middot; Check-in from 16:00
+  </div>
+  <h4>Restaurants</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>Boia Bar</strong></td><td>Right on the beach. Grilled fish, cataplana. A Salema institution.</td><td>~12&ndash;22/pp</td></tr>
+    <tr><td><strong>Atlantico</strong></td><td>Traditional seafood. Grilled fish, clams &agrave; Bulh&atilde;o Pato.</td><td>~10&ndash;20/pp</td></tr>
+    <tr><td><strong>Louren&ccedil;o (A Aventura)</strong></td><td>Cataplana de marisco, grilled sardines. Cosy.</td><td>~10&ndash;18/pp</td></tr>
+  </table>
+  <h4>Sights &amp; Evening</h4>
+  <ul>
+    <li><strong>Dinosaur Footprints</strong> &mdash; Late Jurassic fossils (~150 million years) at western end of beach. <strong>Best at low tide</strong> &mdash; check tide tables for 24 April</li>
+    <li><strong>Sunset from the beach</strong> &mdash; cliffs frame the view. Bring wine</li>
+    <li><strong>Boia Bar</strong> transitions to evening drinks. Cocktails overlooking the Atlantic</li>
+  </ul>
+  <div class="alert alert-warning"><strong>Stock up today for Day 11!</strong> Tomorrow (25 April) is a national holiday &mdash; small shops may be closed.</div>
+</div>
+</section>
+
+<!-- ============ DAY 11 ============ -->
+<section class="day" id="day11">
+<div class="day-header">
+  <span class="day-number">Day 11</span>
+  <span class="day-date">Fri 25 April &mdash; Dia da Liberdade</span>
+</div>
+<h2>Praia da Salema &rarr; Lagos</h2>
+<div class="day-stats">
+  <span>22.9 km</span>
+  <span>6h 23m</span>
+  <span>+430m / -430m</span>
+  <span class="hard">Hard (long, most elevation)</span>
+</div>
+
+<div class="alert alert-info">
+  <strong>National holiday:</strong> 25 April is Freedom Day. Banks &amp; some shops closed, but restaurants, cafes, tourist sites open. Lagos may have celebrations at Pra&ccedil;a Gil Eanes.</div>
+
+<div class="alert alert-warning">
+  <strong>Service gaps:</strong> Salema to Burgau ~7 km (no water/food/shade). Burgau to Luz ~5 km (exposed clifftops). Carry water between stops.
+</div>
+
+<h3>Trail Highlights</h3>
+<ul>
+  <li><strong>Dinosaur footprints at Salema</strong> &mdash; 125-million-year-old Lower Cretaceous trackways at the start. Best at low tide</li>
+  <li><strong>Roman ruins at Boca do Rio</strong> &mdash; mosaics, bathhouses, fish-salting factory. National heritage</li>
+  <li><strong>Rocha Negra (Black Rock)</strong> &mdash; 70-million-year-old volcanic basalt cliff. Steep climb. Panoramic viewpoint at top &mdash; views to Sagres and Lagos. One of best on trail</li>
+  <li><strong>Ponta da Piedade</strong> &mdash; crown jewel of Lagos coastline. Extravagantly eroded golden limestone sea stacks, arches, grottoes. 182-step staircase. Wooden boardwalk</li>
+  <li><strong>Praia do Camilo</strong> &mdash; postcard-perfect tiny cove</li>
+  <li><strong>Praia Dona Ana</strong> &mdash; famous Algarve beach, sheltered by golden cliffs</li>
+  <li>Spring orchids: Mirror Orchid, Bee Orchid between Salema and Burgau</li>
+</ul>
+
+<h3>Food &amp; Water on Trail</h3>
+<table>
+  <tr><th>Place</th><th>~Km</th><th>April Status</th></tr>
+  <tr><td>Salema village</td><td>0</td><td>Cafes, supermarket</td></tr>
+  <tr><td><strong>Burgau village</strong></td><td>~7</td><td>Beach Bar, Sul cafe, Miam, Zaza. All open.</td></tr>
+  <tr><td><strong>Praia da Luz</strong></td><td>~12</td><td>Full services. Public fountain near church.</td></tr>
+  <tr><td>Porto de M&oacute;s beach bar</td><td>~16</td><td>Seasonal, likely open</td></tr>
+  <tr><td><strong>Dona Ana restaurant</strong></td><td>~20.5</td><td>Year-round</td></tr>
+  <tr><td><strong>Lagos old town</strong></td><td>~22.5</td><td>Full city services. Celebration!</td></tr>
+</table>
+
+<div class="town-section">
+  <h3>Lagos &mdash; Final Destination</h3>
+  <div class="accommodation">
+    <strong>Almas 20 Casa Praia</strong> &middot; Travessa das Almas 20 &middot; Check-in 15:00&ndash;23:00 &middot; Heart of old town, steps from Praia da Batata
+  </div>
+  <h4>Celebratory Dinner</h4>
+  <table>
+    <tr><th>Name</th><th>Notes</th><th>Price</th></tr>
+    <tr><td><strong>O Camilo</strong></td><td>Clifftop near Ponta da Piedade. Cataplana, arroz de marisco. Stunning views. Book ahead. Perfect celebratory meal!</td><td>~14&ndash;25/pp</td></tr>
+    <tr><td><strong>Dos Artistas</strong></td><td>Fine dining in converted art gallery. Creative Portuguese-French. Reservations essential.</td><td>~25&ndash;40/pp</td></tr>
+    <tr><td><strong>A Forja</strong></td><td>Traditional old-town. Excellent grilled fish. Popular with locals.</td><td>~12&ndash;20/pp</td></tr>
+    <tr><td><strong>Casinha do Petisco</strong></td><td>Petiscos specialist. Great sharing plates &mdash; clams, prawns, chourico.</td><td>~5&ndash;14/dish</td></tr>
+  </table>
+  <h4>Morning Coffee</h4>
+  <p style="font-size:0.88rem"><strong>The Coffee Cup</strong> (specialty), <strong>Caf&eacute; Odeon</strong> (main square), <strong>Pastelaria Gomba</strong> (best past&eacute;is de nata in Lagos). <strong>Mercado Municipal</strong> for fresh produce (Mon&ndash;Sat 7&ndash;14).</p>
+  <h4>Must-See Sights</h4>
+  <ul>
+    <li><strong>Ponta da Piedade</strong> &mdash; golden sea stacks &amp; grottoes. Boat tours ~20&ndash;30&euro;. ~30 min walk south. Free, open 24/7</li>
+    <li><strong>Igreja de Santo Ant&oacute;nio</strong> &mdash; extraordinary gilded Baroque interior. One of the finest in the Algarve. ~3&ndash;4&euro; via museum</li>
+    <li><strong>Slave Market Museum</strong> &mdash; Europe's first slave market (1444). Sobering, well-curated. ~3&euro;</li>
+    <li><strong>Old Town Walls &amp; Governors' Castle</strong> &mdash; Manueline window where King Sebasti&atilde;o addressed troops (1578)</li>
+    <li><strong>Forte da Ponta da Bandeira</strong> &mdash; 17th-c waterfront fortress. Azulejo chapel. ~2&ndash;3&euro;. 3 min from accommodation</li>
+  </ul>
+  <h4>Sunset &amp; Evening</h4>
+  <ul>
+    <li><strong>Ponta da Piedade</strong> &mdash; golden limestone glows in sunset light. Arrive 30&ndash;45 min early. Combine with dinner at O Camilo</li>
+    <li><strong>Praia da Batata</strong> &mdash; 2 min from your door. No-effort sunset</li>
+    <li><strong>Bon Vivant</strong> &mdash; rooftop terrace, creative cocktails</li>
+    <li><strong>Taberna de Lagos</strong> &mdash; wine bar, excellent Portuguese wines by the glass</li>
+    <li><strong>Stevie Ray's Blues Jazz Bar</strong> &mdash; intimate jazz/blues venue</li>
+  </ul>
+
+  <h4>Distances from Travessa das Almas 20</h4>
+  <p style="font-size:0.85rem">Main square 3 min &middot; Slave Market 4 min &middot; Marina 8 min &middot; Pingo Doce 8 min &middot; Praia da Batata 2 min &middot; Ponta da Piedade 30 min walk</p>
+</div>
+</section>
+
+</div>
+
+<footer>
+  <p>Rota Vicentina Fisherman's Trail Guide &middot; Porto Covo to Lagos &middot; April 2026</p>
+  <p>Researched April 2026. Always verify seasonal hours by calling ahead. <em>Bom caminho!</em></p>
+</footer>
+
+</body>
+</html>
