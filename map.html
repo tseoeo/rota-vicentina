@@ -6,7 +6,6 @@
 <title>Rota Vicentina — Interactive Map</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet-polylineoffset@1.1.1/leaflet.polylineoffset.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
@@ -446,20 +445,20 @@ origTrail.forEach((origLayer, i) => {
     const segPts = pts.slice(startIdx, endIdx + 1);
     if (segPts.length < 2) continue;
 
-    // Weather-coded trail segment
+    // Weather-coded trail segment (solid, underneath)
     L.polyline(segPts, {
       color: lerpColor(mC, aC, tMid),
-      weight: 4,
+      weight: 5,
       opacity: 0.92,
       lineCap: 'butt'
     }).bindPopup(popupContent).addTo(layers.trail);
 
-    // Wind-coded parallel segment (offset 7px to the right)
+    // Wind-coded segment (dashed, drawn on top of weather line)
     L.polyline(segPts, {
       color: windColor(mW + (aW - mW) * tMid),
       weight: 3,
-      opacity: 0.85,
-      offset: 7,
+      opacity: 0.9,
+      dashArray: '10 8',
       lineCap: 'butt'
     }).bindPopup(popupContent).addTo(layers.wind);
   }
