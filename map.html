@@ -55,9 +55,28 @@
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    padding: 10px 14px;
     font-size: 0.75rem;
+    overflow: hidden;
   }
+  .legend-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #444;
+    cursor: pointer;
+    user-select: none;
+  }
+  .legend-toggle:hover { background: #f5f5f5; }
+  .legend-toggle .arrow { font-size: 0.65rem; transition: transform 0.2s; }
+  .legend-toggle.open .arrow { transform: rotate(180deg); }
+  .legend-body { padding: 4px 12px 10px; display: none; }
+  .legend-body.open { display: block; }
   .legend-item { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
   .legend-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 
@@ -106,22 +125,28 @@
 </div>
 
 <div class="legend">
-  <div style="font-size:0.7rem;font-weight:700;color:#666;margin:4px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Weather view</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#eab308;border-radius:2px;width:20px;height:4px"></span> Sunny / dry</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#6b7280;border-radius:2px;width:20px;height:4px"></span> Overcast</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#f97316;border-radius:2px;width:20px;height:4px"></span> Showers</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#dc2626;border-radius:2px;width:20px;height:4px"></span> Rain + wind ⚠️</div>
-  <div style="font-size:0.7rem;font-weight:700;color:#666;margin:6px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Wind view</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#7dd3fc;border-radius:2px;width:20px;height:4px"></span> &lt;15 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#3b82f6;border-radius:2px;width:20px;height:4px"></span> 15–25 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#1d4ed8;border-radius:2px;width:20px;height:4px"></span> 25–35 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#7c3aed;border-radius:2px;width:20px;height:4px"></span> 35+ km/h ⚠️</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#dc2626"></span> Overnight stops</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span> Food / water</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span> Beaches</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#8b5cf6"></span> Viewpoints</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#78716c"></span> Culture</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#16a34a"></span> Shops</div>
+  <div class="legend-toggle" id="legendToggle" onclick="toggleLegend()">
+    Legend <span class="arrow">▲</span>
+  </div>
+  <div class="legend-body" id="legendBody">
+    <div style="font-size:0.7rem;font-weight:700;color:#666;margin:4px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Weather view</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#eab308;border-radius:2px;width:20px;height:4px"></span> Sunny / dry</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#6b7280;border-radius:2px;width:20px;height:4px"></span> Overcast</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#f97316;border-radius:2px;width:20px;height:4px"></span> Showers</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#dc2626;border-radius:2px;width:20px;height:4px"></span> Rain + wind ⚠️</div>
+    <div style="font-size:0.7rem;font-weight:700;color:#666;margin:6px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Wind view</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#7dd3fc;border-radius:2px;width:20px;height:4px"></span> &lt;15 km/h</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#3b82f6;border-radius:2px;width:20px;height:4px"></span> 15–25 km/h</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#1d4ed8;border-radius:2px;width:20px;height:4px"></span> 25–35 km/h</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#7c3aed;border-radius:2px;width:20px;height:4px"></span> 35+ km/h ⚠️</div>
+    <div style="font-size:0.7rem;font-weight:700;color:#666;margin:6px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Markers</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#dc2626"></span> Overnight stops</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span> Food / water</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span> Beaches</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#8b5cf6"></span> Viewpoints</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#78716c"></span> Culture</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#16a34a"></span> Shops</div>
+  </div>
 </div>
 
 <script>
@@ -496,6 +521,14 @@ document.querySelectorAll('input[name="trailview"]').forEach(rb => {
 
 // Fit to trail bounds
 map.fitBounds(stagePoints.map(p => [p[0], p[1]]), {padding: [40, 40]});
+
+// Legend toggle
+function toggleLegend() {
+  const toggle = document.getElementById('legendToggle');
+  const body = document.getElementById('legendBody');
+  const isOpen = body.classList.toggle('open');
+  toggle.classList.toggle('open', isOpen);
+}
 </script>
 
 </body>
