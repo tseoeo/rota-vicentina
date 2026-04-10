@@ -109,10 +109,10 @@
   <div class="legend-item"><span class="legend-dot" style="background:#f97316;border-radius:2px;width:20px;height:4px"></span> Showers</div>
   <div class="legend-item"><span class="legend-dot" style="background:#dc2626;border-radius:2px;width:20px;height:4px"></span> Rain + wind ⚠️</div>
   <div style="font-size:0.7rem;font-weight:700;color:#666;margin:6px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Wind (offset line)</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#22c55e;border-radius:2px;width:20px;height:3px"></span> &lt;15 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#eab308;border-radius:2px;width:20px;height:3px"></span> 15–25 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#f97316;border-radius:2px;width:20px;height:3px"></span> 25–35 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#dc2626;border-radius:2px;width:20px;height:3px"></span> 35+ km/h ⚠️</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#7dd3fc;border-radius:2px;width:20px;height:3px"></span> &lt;15 km/h</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#3b82f6;border-radius:2px;width:20px;height:3px"></span> 15–25 km/h</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#1d4ed8;border-radius:2px;width:20px;height:3px"></span> 25–35 km/h</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#7c3aed;border-radius:2px;width:20px;height:3px"></span> 35+ km/h ⚠️</div>
   <div class="legend-item"><span class="legend-dot" style="background:#dc2626"></span> Overnight stops</div>
   <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span> Food / water</div>
   <div class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span> Beaches</div>
@@ -417,10 +417,10 @@ function lerpColor(a, b, t) {
   return `rgb(${Math.round(r1+(r2-r1)*t)},${Math.round(g1+(g2-g1)*t)},${Math.round(b1+(b2-b1)*t)})`;
 }
 function windColor(kmh) {
-  if (kmh < 15) return '#22c55e';   // calm — green
-  if (kmh < 25) return '#eab308';   // moderate — amber
-  if (kmh < 35) return '#f97316';   // strong — orange
-  return '#dc2626';                  // very strong — red
+  if (kmh < 15) return '#7dd3fc';   // calm — sky blue
+  if (kmh < 25) return '#3b82f6';   // moderate — blue
+  if (kmh < 35) return '#1d4ed8';   // strong — dark blue
+  return '#7c3aed';                  // very strong — violet ⚠️
 }
 
 const SEGS = 24; // segments per day (~1 per 30 min of hiking)
