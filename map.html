@@ -60,6 +60,22 @@
   }
   .legend-item { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
   .legend-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+  /* Weather overlay labels */
+  .weather-label {
+    background: rgba(255,255,255,0.88);
+    border: 1px solid rgba(37,99,235,0.3);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    white-space: nowrap;
+    line-height: 1.4;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    pointer-events: none;
+  }
+  .weather-label .wl-day { font-weight: 700; color: #1e3a5f; font-size: 0.65rem; }
+  .weather-label .wl-main { color: #111; }
 </style>
 </head>
 <body>
@@ -81,6 +97,7 @@
   <label><input type="checkbox" data-layer="culture" checked> Culture &amp; history</label>
   <label><input type="checkbox" data-layer="shop" checked> Shops</label>
   <label><input type="checkbox" data-layer="warning"> Warnings</label>
+  <label><input type="checkbox" data-layer="weather"> Weather</label>
 </div>
 
 <div class="legend">
@@ -125,7 +142,8 @@ const layers = {
   viewpoint: L.layerGroup(),
   culture: L.layerGroup(),
   shop: L.layerGroup(),
-  warning: L.layerGroup()
+  warning: L.layerGroup(),
+  weather: L.layerGroup()
 };
 
 // Stage start points (used for map bounds)
@@ -153,17 +171,17 @@ L.polyline([[37.06548, -8.8246], [37.06544, -8.82425], [37.06579, -8.82353], [37
 // ========== OVERNIGHT STOPS ==========
 const overnights = [
   [37.850155, -8.795802, 'Porto Covo', 'Start point'],
-  [37.7267, -8.7828, 'Vila Nova de Milfontes', 'Night 1 — Casa das Marias'],
-  [37.6547, -8.7942, 'Almograve', 'Night 2 — Casa do Mar'],
-  [37.5271, -8.7837, 'Zambujeira do Mar', 'Night 3 — Breathe In'],
-  [37.4328, -8.7702, 'Odeceixe', 'Night 4 — AL-Odeceixe Verde'],
-  [37.3157, -8.8038, 'Aljezur', 'Night 5 — FlorAL'],
-  [37.2991, -8.8537, 'Vale da Telha / Arrifana', 'Night 6 — Endless Summer Surf House'],
-  [37.1843, -8.8944, 'Carrapateira', 'Night 7 — Casa D\'Olivia'],
-  [37.0825, -8.9093, 'Vila do Bispo', 'Night 8 — Hotel Mira Sagres'],
-  [37.0070, -8.9337, 'Sagres', 'Night 9 — Pontalaia Apartamentos'],
-  [37.0665, -8.8299, 'Salema', 'Night 10 — NAU Salema Beach Village'],
-  [37.1010, -8.6720, 'Lagos', 'Night 11 — Almas 20 Casa Praia (finish!)']
+  [37.7267, -8.7828, 'Vila Nova de Milfontes', 'Night 1 — Casa das Marias<br><span style="font-size:0.8rem">☀️ 22–26°C / 11°C · 0% rain · NW 15 km/h · UV 7</span>'],
+  [37.6547, -8.7942, 'Almograve', 'Night 2 — Casa do Mar<br><span style="font-size:0.8rem">⛅ 22–25°C / 12°C · 0% rain · NW 15 km/h · UV 7</span>'],
+  [37.5271, -8.7837, 'Zambujeira do Mar', 'Night 3 — Breathe In<br><span style="font-size:0.8rem">☁️ 22–27°C / 13°C · 3% rain · NW 20 km/h · UV 6</span>'],
+  [37.4328, -8.7702, 'Odeceixe', 'Night 4 — AL-Odeceixe Verde<br><span style="font-size:0.8rem">⛅ 22–27°C / 15°C · 2% rain · NW 22 km/h · UV 7</span>'],
+  [37.3157, -8.8038, 'Aljezur', 'Night 5 — FlorAL<br><span style="font-size:0.8rem">☁️ 22°C / 17°C · 6% rain · NW 16 km/h · UV 6</span>'],
+  [37.2991, -8.8537, 'Vale da Telha / Arrifana', 'Night 6 — Endless Summer Surf House<br><span style="font-size:0.8rem">☁️ 22°C / 17°C · 8% rain · W/NW 12 km/h · UV 6</span>'],
+  [37.1843, -8.8944, 'Carrapateira', 'Night 7 — Casa D\'Olivia<br><span style="font-size:0.8rem">🌦️ 22°C / 17°C · 45% rain · NW 20 km/h · UV 5</span>'],
+  [37.0825, -8.9093, 'Vila do Bispo', 'Night 8 — Hotel Mira Sagres<br><span style="font-size:0.8rem">🌦️ 23°C / 17°C · 45% rain · NW 16 km/h · UV 5</span>'],
+  [37.0070, -8.9337, 'Sagres', 'Night 9 — Pontalaia Apartamentos<br><span style="font-size:0.8rem">☁️ 21°C / 16°C · 50% rain · NW 20 km/h · UV 5</span>'],
+  [37.0665, -8.8299, 'Salema', 'Night 10 — NAU Salema Beach Village<br><span style="font-size:0.8rem">🌧️ 18°C / 13°C · 58% rain · ⚠️ NW 35 km/h · UV 4</span>'],
+  [37.1010, -8.6720, 'Lagos', 'Night 11 — Almas 20 Casa Praia (finish!)<br><span style="font-size:0.8rem">🌦️ 18°C / 13°C · 35% rain · NW 22 km/h · UV 5</span>']
 ];
 overnights.forEach(([lat, lng, name, desc], i) => {
   mkr(lat, lng, '#dc2626', 9)
@@ -338,9 +356,32 @@ warnings.forEach(([lat, lng, name, desc]) => {
     .addTo(layers.warning);
 });
 
+// ========== WEATHER OVERLAY ==========
+const weatherData = [
+  { lat: 37.7267, lng: -8.7828, day: 1, date: '15 Apr', icon: '☀️', high: 26, low: 11, rain: '0%', wind: 'NW 15' },
+  { lat: 37.6547, lng: -8.7942, day: 2, date: '16 Apr', icon: '⛅', high: 25, low: 12, rain: '0%', wind: 'NW 15' },
+  { lat: 37.5271, lng: -8.7837, day: 3, date: '17 Apr', icon: '☁️', high: 27, low: 13, rain: '3%', wind: 'NW 20' },
+  { lat: 37.4328, lng: -8.7702, day: 4, date: '18 Apr', icon: '⛅', high: 27, low: 15, rain: '2%', wind: 'NW 22' },
+  { lat: 37.3157, lng: -8.8038, day: 5, date: '19 Apr', icon: '☁️', high: 22, low: 17, rain: '6%', wind: 'NW 16' },
+  { lat: 37.2991, lng: -8.8537, day: 6, date: '20 Apr', icon: '☁️', high: 22, low: 17, rain: '8%', wind: 'W 12' },
+  { lat: 37.1843, lng: -8.8944, day: 7, date: '21 Apr', icon: '🌦️', high: 22, low: 17, rain: '45%', wind: 'NW 20' },
+  { lat: 37.0825, lng: -8.9093, day: 8, date: '22 Apr', icon: '🌦️', high: 23, low: 17, rain: '45%', wind: 'NW 16' },
+  { lat: 37.0070, lng: -8.9337, day: 9, date: '23 Apr', icon: '☁️', high: 21, low: 16, rain: '50%', wind: 'NW 20' },
+  { lat: 37.0665, lng: -8.8299, day: 10, date: '24 Apr', icon: '🌧️', high: 18, low: 13, rain: '58%', wind: '⚠️NW 35' },
+  { lat: 37.1010, lng: -8.6720, day: 11, date: '25 Apr', icon: '🌦️', high: 18, low: 13, rain: '35%', wind: 'NW 22' },
+];
+weatherData.forEach(w => {
+  const icon = L.divIcon({
+    className: '',
+    html: `<div class="weather-label"><div class="wl-day">D${w.day} ${w.date}</div><div class="wl-main">${w.icon} ${w.high}°/${w.low}° · ${w.rain} · ${w.wind} km/h</div></div>`,
+    iconAnchor: [-12, 8]
+  });
+  L.marker([w.lat, w.lng], { icon, interactive: false }).addTo(layers.weather);
+});
+
 // ========== ADD DEFAULT LAYERS ==========
 Object.entries(layers).forEach(([key, layer]) => {
-  if (key !== 'warning') layer.addTo(map);
+  if (key !== 'warning' && key !== 'weather') layer.addTo(map);
 });
 
 // ========== FILTER CONTROLS ==========

@@ -239,6 +239,25 @@
     color: var(--muted);
   }
 
+  /* Weather card */
+  .weather-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    background: linear-gradient(135deg, var(--accent-light) 0%, #e0f2fe 100%);
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 9px 14px;
+    margin-bottom: 20px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+  .weather-icon { font-size: 1.3em; flex-shrink: 0; }
+  .weather-temp { font-weight: 700; color: #1e40af; white-space: nowrap; }
+  .weather-detail { color: #374151; }
+  .weather-disclaimer { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
   @media (max-width: 600px) {
     header h1 { font-size: 1.4rem; }
     .day h2 { font-size: 1.15rem; }
@@ -283,7 +302,8 @@
 <div class="grid-2">
   <div class="info-card">
     <h4>Weather</h4>
-    <p>17&ndash;20&deg;C days, 11&ndash;13&deg;C nights. Wind is the #1 factor (15&ndash;25 km/h, gusts to 50). Expect 3&ndash;5 rain episodes. Fog mornings burning off by 10:00. UV 6&ndash;8.</p>
+    <p><strong>Days 1&ndash;4 (Apr 15&ndash;18): Best of the trip.</strong> Sunny to partly cloudy, 22&ndash;27&deg;C, 0&ndash;3% rain. Enjoy it &mdash; ideal hiking conditions. <strong>Days 5&ndash;6 (Apr 19&ndash;20):</strong> Warm but overcast, 22&deg;C, very low rain risk. <strong>Days 7&ndash;9 (Apr 21&ndash;23): First shower window.</strong> 40&ndash;50% rain probability, amounts light (&lt;1 mm/day). Rain jacket on and go &mdash; not a washout. <strong>Day 10 (Apr 24): Wind warning &#9888;</strong> &mdash; 30&ndash;40 km/h NW gusts on exposed Sagres&rarr;Salema cliffs, drizzle, 18&deg;C. Start early. <strong>Day 11 (Apr 25):</strong> Patchy showers easing by afternoon into Lagos. Wind NW 15&ndash;25 km/h. UV peaks at 7 (High) Apr 15&ndash;20; use SPF 30+ daily.</p>
+    <p class="weather-disclaimer">Forecast as of 9 April 2026. Check <a href="https://www.ipma.pt" target="_blank">IPMA.pt</a> for latest updates.</p>
   </div>
   <div class="info-card">
     <h4>Essentials to Carry</h4>
@@ -324,6 +344,11 @@
   <span>5h 08m</span>
   <span>+160m / -156m</span>
   <span class="hard">Hard (deep sand)</span>
+</div>
+<div class="weather-card">
+  <span class="weather-icon">☀️</span>
+  <span class="weather-temp">22–26°C / 11°C</span>
+  <span class="weather-detail">Sunny · 0% rain · Wind NW 12–22 km/h · UV 7 · ↑06:58 ↓20:07</span>
 </div>
 
 <div class="alert alert-danger">
@@ -389,6 +414,11 @@
   <span>+171m / -154m</span>
   <span class="moderate">Moderate</span>
 </div>
+<div class="weather-card">
+  <span class="weather-icon">⛅</span>
+  <span class="weather-temp">22–25°C / 12°C</span>
+  <span class="weather-detail">Partly cloudy · 0% rain · Wind NW 12–22 km/h · UV 7 · ↑06:56 ↓20:08</span>
+</div>
 
 <div class="alert alert-info">
   <strong>River crossing:</strong> Rio Mira ferry (~5&euro;, ~10 min) departs below Forte de S&atilde;o Clemente. Operator: Taxi Boat Maresia +351 963 033 289 &mdash; call day before. Backup: road bridge (+3.5 km).
@@ -451,6 +481,11 @@
   <span>+251m / -252m</span>
   <span class="hard">Hard (length + terrain)</span>
 </div>
+<div class="weather-card">
+  <span class="weather-icon">☁️</span>
+  <span class="weather-temp">22–27°C / 13°C</span>
+  <span class="weather-detail">Mostly cloudy · 3% rain · Wind NW 18–22 km/h · UV 6 · ↑06:55 ↓20:09</span>
+</div>
 
 <div class="alert alert-danger">
   <strong>Service gap:</strong> After Almograve, NO water/food/shade for ~14 km until Cavaleiro village. Carry 2L+ and packed lunch.
@@ -507,6 +542,11 @@
   <span>5h 13m</span>
   <span>+311m / -328m</span>
   <span class="hard">Hard (constant gully climbs)</span>
+</div>
+<div class="weather-card">
+  <span class="weather-icon">⛅</span>
+  <span class="weather-temp">22–27°C / 15°C</span>
+  <span class="weather-detail">Morning cloud, sunny intervals · 2% rain · Wind NW 20–25 km/h · UV 7 · ↑06:54 ↓20:10</span>
 </div>
 
 <div class="alert alert-info">
@@ -568,6 +608,11 @@
   <span>5h 58m</span>
   <span>+224m / -222m</span>
   <span class="hard">Hard (longest stage)</span>
+</div>
+<div class="weather-card">
+  <span class="weather-icon">☁️</span>
+  <span class="weather-temp">22°C / 17°C</span>
+  <span class="weather-detail">Mostly cloudy · 6% rain · Wind NW 14–18 km/h · UV 6 · ↑06:52 ↓20:11</span>
 </div>
 
 <div class="alert alert-info">
@@ -632,6 +677,11 @@
   <span>+301m / -247m</span>
   <span class="moderate">Moderate</span>
 </div>
+<div class="weather-card">
+  <span class="weather-icon">☁️</span>
+  <span class="weather-temp">22°C / 17°C</span>
+  <span class="weather-detail">Overcast · 8% rain · Wind W/NW 10–15 km/h · UV 6 · ↑06:51 ↓20:11</span>
+</div>
 
 <h3>Trail Highlights</h3>
 <ul>
@@ -683,6 +733,11 @@
   <span>5h 19m</span>
   <span>+257m / -306m</span>
   <span class="hard">Hard (tide-dependent)</span>
+</div>
+<div class="weather-card">
+  <span class="weather-icon">🌦️</span>
+  <span class="weather-temp">22°C / 17°C</span>
+  <span class="weather-detail">Showers possible · 45% rain · Wind NW 18–22 km/h · UV 5 · ↑06:50 ↓20:12 · Rain jacket on</span>
 </div>
 
 <div class="alert alert-danger">
@@ -743,6 +798,11 @@
   <span>+331m / -259m</span>
   <span class="hard">Hard</span>
 </div>
+<div class="weather-card">
+  <span class="weather-icon">🌦️</span>
+  <span class="weather-temp">23°C / 17°C</span>
+  <span class="weather-detail">Passing showers · 45% rain · Wind NW 12–20 km/h · UV 5 · ↑06:49 ↓20:13 · Rain jacket on</span>
+</div>
 
 <div class="alert alert-danger">
   <strong>Service gap:</strong> After Praia do Amado beach bar (~km 2.5), NO water/food/shade for ~13 km to Vila do Bispo. Critical. Carry 2L+ and food.
@@ -799,6 +859,11 @@
   <span>5h 41m</span>
   <span>+224m / -285m</span>
   <span class="hard">Hard</span>
+</div>
+<div class="weather-card">
+  <span class="weather-icon">☁️</span>
+  <span class="weather-temp">21°C / 16°C</span>
+  <span class="weather-detail">Overcast, drizzle risk · 50% rain · Wind NW 18–22 km/h · UV 5 · ↑06:47 ↓20:14</span>
 </div>
 
 <div class="alert alert-danger">
@@ -863,6 +928,11 @@
   <span>+310m / -330m</span>
   <span class="hard">Hard</span>
 </div>
+<div class="weather-card">
+  <span class="weather-icon">🌧️</span>
+  <span class="weather-temp">18°C / 13°C</span>
+  <span class="weather-detail">Drizzle · 58% rain · ⚠️ Wind NW 30–40 km/h · UV 4 · ↑06:46 ↓20:15 · Start early, extra layer</span>
+</div>
 
 <div class="alert alert-info">
   <strong>Tide note:</strong> Between Furnas and Figueira beaches, rocky formations can block beach passage at high tide. Cliff-top alternative exists. One hiker reported waiting 2+ hours for tide to recede.
@@ -926,6 +996,11 @@
   <span>6h 23m</span>
   <span>+430m / -430m</span>
   <span class="hard">Hard (long, most elevation)</span>
+</div>
+<div class="weather-card">
+  <span class="weather-icon">🌦️</span>
+  <span class="weather-temp">18°C / 13°C</span>
+  <span class="weather-detail">Patchy showers, easing PM · 35% rain · Wind NW 18–25 km/h · UV 5 · ↑06:45 ↓20:16</span>
 </div>
 
 <div class="alert alert-info">
