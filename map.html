@@ -89,8 +89,12 @@
 
 <div class="filters" id="filters">
   <h4>Show / Hide</h4>
-  <label><input type="checkbox" data-layer="trail" checked> Trail (weather)</label>
-  <label><input type="checkbox" data-layer="wind"> Trail (wind)</label>
+  <div style="margin-bottom:6px">
+    <div style="font-size:0.7rem;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Trail colour</div>
+    <label><input type="radio" name="trailview" value="trail" checked> Weather</label>
+    <label style="margin-left:8px"><input type="radio" name="trailview" value="wind"> Wind</label>
+  </div>
+  <label><input type="checkbox" data-layer="trail" checked style="display:none"> </label>
   <label><input type="checkbox" data-layer="overnight" checked> Overnight stops</label>
   <label><input type="checkbox" data-layer="food" checked> Food &amp; water</label>
   <label><input type="checkbox" data-layer="beach" checked> Beaches</label>
@@ -102,16 +106,16 @@
 </div>
 
 <div class="legend">
-  <div style="font-size:0.7rem;font-weight:700;color:#666;margin:4px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Weather (trail)</div>
+  <div style="font-size:0.7rem;font-weight:700;color:#666;margin:4px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Weather view</div>
   <div class="legend-item"><span class="legend-dot" style="background:#eab308;border-radius:2px;width:20px;height:4px"></span> Sunny / dry</div>
   <div class="legend-item"><span class="legend-dot" style="background:#6b7280;border-radius:2px;width:20px;height:4px"></span> Overcast</div>
   <div class="legend-item"><span class="legend-dot" style="background:#f97316;border-radius:2px;width:20px;height:4px"></span> Showers</div>
   <div class="legend-item"><span class="legend-dot" style="background:#dc2626;border-radius:2px;width:20px;height:4px"></span> Rain + wind ⚠️</div>
-  <div style="font-size:0.7rem;font-weight:700;color:#666;margin:6px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Wind (offset line)</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#7dd3fc;border-radius:2px;width:20px;height:3px"></span> &lt;15 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#3b82f6;border-radius:2px;width:20px;height:3px"></span> 15–25 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#1d4ed8;border-radius:2px;width:20px;height:3px"></span> 25–35 km/h</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#7c3aed;border-radius:2px;width:20px;height:3px"></span> 35+ km/h ⚠️</div>
+  <div style="font-size:0.7rem;font-weight:700;color:#666;margin:6px 0 2px;text-transform:uppercase;letter-spacing:0.05em">Wind view</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#7dd3fc;border-radius:2px;width:20px;height:4px"></span> &lt;15 km/h</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#3b82f6;border-radius:2px;width:20px;height:4px"></span> 15–25 km/h</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#1d4ed8;border-radius:2px;width:20px;height:4px"></span> 25–35 km/h</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#7c3aed;border-radius:2px;width:20px;height:4px"></span> 35+ km/h ⚠️</div>
   <div class="legend-item"><span class="legend-dot" style="background:#dc2626"></span> Overnight stops</div>
   <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span> Food / water</div>
   <div class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span> Beaches</div>
@@ -453,12 +457,11 @@ origTrail.forEach((origLayer, i) => {
       lineCap: 'butt'
     }).bindPopup(popupContent).addTo(layers.trail);
 
-    // Wind-coded segment (dashed, drawn on top of weather line)
+    // Wind-coded segment (solid, shown in wind view mode)
     L.polyline(segPts, {
       color: windColor(mW + (aW - mW) * tMid),
-      weight: 3,
-      opacity: 0.9,
-      dashArray: '10 8',
+      weight: 5,
+      opacity: 0.92,
       lineCap: 'butt'
     }).bindPopup(popupContent).addTo(layers.wind);
   }
@@ -475,6 +478,19 @@ document.querySelectorAll('#filters input[type="checkbox"]').forEach(cb => {
     const layer = layers[this.dataset.layer];
     if (this.checked) map.addLayer(layer);
     else map.removeLayer(layer);
+  });
+});
+
+// Trail view toggle: weather vs wind (mutually exclusive)
+document.querySelectorAll('input[name="trailview"]').forEach(rb => {
+  rb.addEventListener('change', function() {
+    if (this.value === 'trail') {
+      map.addLayer(layers.trail);
+      map.removeLayer(layers.wind);
+    } else {
+      map.removeLayer(layers.trail);
+      map.addLayer(layers.wind);
+    }
   });
 });
 
