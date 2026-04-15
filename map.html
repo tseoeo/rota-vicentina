@@ -80,6 +80,57 @@
   .legend-item { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
   .legend-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 
+  /* Locate-me button */
+  .locate-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 12px;
+    z-index: 1000;
+    width: 44px;
+    height: 44px;
+    background: white;
+    border: none;
+    border-radius: 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .locate-btn:hover { background: #f5f5f5; }
+  .locate-btn.active { background: #1e3a5f; color: white; }
+  .locate-btn.active .icon { animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .locate-btn .icon { line-height: 1; }
+  .locate-status {
+    position: absolute;
+    bottom: 70px;
+    right: 12px;
+    z-index: 1000;
+    background: rgba(30,58,95,0.92);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    max-width: 220px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: none;
+  }
+  .locate-status.visible { display: block; }
+
+  /* Location accuracy circle styling handled via Leaflet options */
+  .me-marker {
+    width: 18px;
+    height: 18px;
+    background: #2563eb;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.4), 0 1px 4px rgba(0,0,0,0.3);
+  }
+
   /* Weather overlay labels */
   .weather-label {
     background: rgba(255,255,255,0.88);
@@ -105,6 +156,11 @@
 </div>
 
 <div id="map"></div>
+
+<button class="locate-btn" id="locateBtn" type="button" aria-label="Show my location" title="Show my location">
+  <span class="icon">📍</span>
+</button>
+<div class="locate-status" id="locateStatus"></div>
 
 <div class="filters" id="filters">
   <h4>Show / Hide</h4>
@@ -558,6 +614,97 @@ function toggleLegend() {
   const isOpen = body.classList.toggle('open');
   toggle.classList.toggle('open', isOpen);
 }
+
+// ========== LIVE LOCATION TRACKING ==========
+const locateBtn = document.getElementById('locateBtn');
+const locateStatus = document.getElementById('locateStatus');
+let meMarker = null;
+let meAccuracy = null;
+let tracking = false;
+let firstFix = true;
+
+function showStatus(msg, autohide) {
+  locateStatus.textContent = msg;
+  locateStatus.classList.add('visible');
+  if (autohide) setTimeout(() => locateStatus.classList.remove('visible'), 4000);
+}
+
+function hideStatus() {
+  locateStatus.classList.remove('visible');
+}
+
+function startLocate() {
+  if (!('geolocation' in navigator)) {
+    showStatus('Geolocation not supported on this device', true);
+    return;
+  }
+  tracking = true;
+  firstFix = true;
+  locateBtn.classList.add('active');
+  showStatus('Acquiring GPS…', false);
+  // watch:true keeps streaming updates; high accuracy uses GPS where available
+  map.locate({ watch: true, enableHighAccuracy: true, maximumAge: 5000, timeout: 30000 });
+}
+
+function stopLocate() {
+  tracking = false;
+  map.stopLocate();
+  locateBtn.classList.remove('active');
+  if (meMarker) { map.removeLayer(meMarker); meMarker = null; }
+  if (meAccuracy) { map.removeLayer(meAccuracy); meAccuracy = null; }
+  hideStatus();
+}
+
+map.on('locationfound', (e) => {
+  const meIcon = L.divIcon({
+    className: '',
+    html: '<div class="me-marker"></div>',
+    iconSize: [18, 18],
+    iconAnchor: [9, 9]
+  });
+  const acc = Math.round(e.accuracy);
+  if (!meMarker) {
+    meMarker = L.marker(e.latlng, { icon: meIcon, interactive: true, zIndexOffset: 1000 }).addTo(map);
+    meAccuracy = L.circle(e.latlng, {
+      radius: e.accuracy,
+      color: '#2563eb',
+      weight: 1,
+      fillColor: '#2563eb',
+      fillOpacity: 0.1,
+      interactive: false
+    }).addTo(map);
+  } else {
+    meMarker.setLatLng(e.latlng);
+    meAccuracy.setLatLng(e.latlng);
+    meAccuracy.setRadius(e.accuracy);
+  }
+  meMarker.bindPopup(`<strong>You are here</strong><br><span style="font-size:0.78rem">${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}<br>Accuracy: ±${acc} m</span>`);
+  showStatus(`Live · ±${acc} m`, false);
+  if (firstFix) {
+    map.setView(e.latlng, Math.max(map.getZoom(), 14));
+    firstFix = false;
+  }
+});
+
+map.on('locationerror', (e) => {
+  let msg;
+  switch (e.code) {
+    case 1: msg = 'Permission denied — enable location for this site in your browser settings'; break;
+    case 2: msg = 'Position unavailable — try moving to open sky'; break;
+    case 3: msg = 'GPS timeout — retrying…'; return; // don't stop on timeout
+    default: msg = e.message || 'Location error';
+  }
+  showStatus(msg, true);
+  stopLocate();
+});
+
+locateBtn.addEventListener('click', () => {
+  if (tracking) {
+    stopLocate();
+  } else {
+    startLocate();
+  }
+});
 </script>
 
 </body>
