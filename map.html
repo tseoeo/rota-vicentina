@@ -80,23 +80,23 @@
   .legend-item { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
   .legend-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 
-  /* Locate-me control */
+  /* Locate-me control — styled to match Leaflet zoom buttons */
   .leaflet-control-locate {
-    background: white;
-    width: 36px;
-    height: 36px;
-    border-radius: 4px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    width: 34px !important;
+    height: 34px !important;
+    line-height: 34px !important;
+    background: white !important;
     cursor: pointer;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     font-size: 18px;
-    border: 2px solid rgba(0,0,0,0.15);
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
   }
-  .leaflet-control-locate:hover { background: #f5f5f5; }
-  .leaflet-control-locate.active { background: #1e3a5f; border-color: #1e3a5f; }
+  .leaflet-control-locate:hover { background: #f5f5f5 !important; }
+  .leaflet-control-locate.active { background: #1e3a5f !important; }
   .leaflet-control-locate.active .loc-icon { filter: brightness(10); animation: locpulse 1.5s ease-in-out infinite; }
   @keyframes locpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
   .loc-status {
@@ -607,79 +607,82 @@ function toggleLegend() {
 
 // ========== LIVE LOCATION TRACKING (Leaflet Control) ==========
 (function () {
-  const statusEl = document.getElementById('locStatus');
-  let meMarker = null, meAccuracy = null, tracking = false, firstFix = true, btn = null;
+  var statusEl = document.getElementById('locStatus');
+  var meMarker = null, meAccuracy = null, tracking = false, firstFix = true, btn = null, watchId = null;
 
   function showSt(msg, autohide) {
     statusEl.textContent = msg;
     statusEl.classList.add('visible');
-    if (autohide) setTimeout(() => statusEl.classList.remove('visible'), 4000);
+    if (autohide) setTimeout(function(){ statusEl.classList.remove('visible'); }, 4000);
   }
 
   function start() {
-    if (!('geolocation' in navigator)) { showSt('Geolocation not supported', true); return; }
+    if (!navigator.geolocation) { showSt('Geolocation not supported', true); return; }
     tracking = true; firstFix = true;
     btn.classList.add('active');
+    btn.style.background = '#1e3a5f';
     showSt('Acquiring GPS…', false);
-    map.locate({ watch: true, enableHighAccuracy: true, maximumAge: 5000, timeout: 30000 });
+    // Use native API directly — more reliable than Leaflet wrapper on iOS
+    watchId = navigator.geolocation.watchPosition(
+      function (pos) {
+        var lat = pos.coords.latitude;
+        var lng = pos.coords.longitude;
+        var acc = Math.round(pos.coords.accuracy);
+        var latlng = L.latLng(lat, lng);
+        var meIcon = L.divIcon({ className: '', html: '<div class="me-marker"></div>', iconSize: [18, 18], iconAnchor: [9, 9] });
+        if (!meMarker) {
+          meMarker = L.marker(latlng, { icon: meIcon, interactive: true, zIndexOffset: 1000 }).addTo(map);
+          meAccuracy = L.circle(latlng, { radius: acc, color: '#2563eb', weight: 1, fillColor: '#2563eb', fillOpacity: 0.1, interactive: false }).addTo(map);
+        } else {
+          meMarker.setLatLng(latlng);
+          meAccuracy.setLatLng(latlng).setRadius(acc);
+        }
+        meMarker.bindPopup('<strong>You are here</strong><br><span style="font-size:0.78rem">' + lat.toFixed(5) + ', ' + lng.toFixed(5) + '<br>Accuracy: \u00b1' + acc + ' m</span>');
+        showSt('Live \u00b7 \u00b1' + acc + ' m', false);
+        if (firstFix) { map.setView(latlng, Math.max(map.getZoom(), 14)); firstFix = false; }
+      },
+      function (err) {
+        if (err.code === 3) return; // timeout — keep trying
+        var msg = err.code === 1 ? 'Location denied \u2014 enable in Settings > Safari > Location'
+                : err.code === 2 ? 'Position unavailable \u2014 try open sky'
+                : (err.message || 'Location error');
+        showSt(msg, true);
+        stop();
+      },
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 30000 }
+    );
   }
 
   function stop() {
     tracking = false;
-    map.stopLocate();
-    if (btn) btn.classList.remove('active');
+    if (watchId !== null) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+    if (btn) { btn.classList.remove('active'); btn.style.background = ''; }
     if (meMarker) { map.removeLayer(meMarker); meMarker = null; }
     if (meAccuracy) { map.removeLayer(meAccuracy); meAccuracy = null; }
     statusEl.classList.remove('visible');
   }
 
-  // Create as a proper Leaflet control so click events work reliably
-  const LocateControl = L.Control.extend({
+  // Leaflet control — the idiomatic way to add interactive buttons to a Leaflet map
+  var LocateControl = L.Control.extend({
     options: { position: 'bottomright' },
     onAdd: function () {
-      btn = L.DomUtil.create('div', 'leaflet-control-locate');
-      btn.innerHTML = '<span class="loc-icon">📍</span>';
+      btn = L.DomUtil.create('div', 'leaflet-control leaflet-control-locate leaflet-bar');
+      btn.innerHTML = '<span class="loc-icon" style="pointer-events:none">📍</span>';
       btn.title = 'Show my location';
       btn.setAttribute('role', 'button');
-      btn.setAttribute('aria-label', 'Show my location');
       btn.tabIndex = 0;
-      // Prevent map from capturing clicks/touches on this control
       L.DomEvent.disableClickPropagation(btn);
       L.DomEvent.disableScrollPropagation(btn);
-      L.DomEvent.on(btn, 'click', function (e) {
-        L.DomEvent.stopPropagation(e);
-        L.DomEvent.preventDefault(e);
+      // Handle both click and touchend for iOS
+      function handleTap(e) {
+        L.DomEvent.stop(e);
         if (tracking) { stop(); } else { start(); }
-      });
+      }
+      L.DomEvent.on(btn, 'click', handleTap);
       return btn;
     }
   });
   map.addControl(new LocateControl());
-
-  const meIcon = L.divIcon({ className: '', html: '<div class="me-marker"></div>', iconSize: [18, 18], iconAnchor: [9, 9] });
-
-  map.on('locationfound', function (e) {
-    const acc = Math.round(e.accuracy);
-    if (!meMarker) {
-      meMarker = L.marker(e.latlng, { icon: meIcon, interactive: true, zIndexOffset: 1000 }).addTo(map);
-      meAccuracy = L.circle(e.latlng, { radius: e.accuracy, color: '#2563eb', weight: 1, fillColor: '#2563eb', fillOpacity: 0.1, interactive: false }).addTo(map);
-    } else {
-      meMarker.setLatLng(e.latlng);
-      meAccuracy.setLatLng(e.latlng).setRadius(e.accuracy);
-    }
-    meMarker.bindPopup('<strong>You are here</strong><br><span style="font-size:0.78rem">' + e.latlng.lat.toFixed(5) + ', ' + e.latlng.lng.toFixed(5) + '<br>Accuracy: \u00b1' + acc + ' m</span>');
-    showSt('Live \u00b7 \u00b1' + acc + ' m', false);
-    if (firstFix) { map.setView(e.latlng, Math.max(map.getZoom(), 14)); firstFix = false; }
-  });
-
-  map.on('locationerror', function (e) {
-    if (e.code === 3) return; // timeout — silent retry
-    var msg = e.code === 1 ? 'Location permission denied \u2014 enable in browser settings'
-            : e.code === 2 ? 'Position unavailable \u2014 try open sky'
-            : (e.message || 'Location error');
-    showSt(msg, true);
-    stop();
-  });
 })();
 </script>
 
