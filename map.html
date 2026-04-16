@@ -80,25 +80,20 @@
   .legend-item { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
   .legend-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 
-  /* Locate-me control — styled to match Leaflet zoom buttons */
-  .leaflet-control-locate {
-    width: 34px !important;
-    height: 34px !important;
-    line-height: 34px !important;
-    background: white !important;
-    cursor: pointer;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
+  /* Locate-me control — matches Leaflet zoom button styling exactly */
+  a.leaflet-control-locate {
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
     font-size: 18px;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    -webkit-user-select: none;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    cursor: pointer;
   }
-  .leaflet-control-locate:hover { background: #f5f5f5 !important; }
-  .leaflet-control-locate.active { background: #1e3a5f !important; }
-  .leaflet-control-locate.active .loc-icon { filter: brightness(10); animation: locpulse 1.5s ease-in-out infinite; }
-  @keyframes locpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  a.leaflet-control-locate:hover { background: #f5f5f5; }
+  a.leaflet-control-locate.active { background: #1e3a5f; }
   .loc-status {
     position: absolute;
     bottom: 85px;
@@ -662,24 +657,25 @@ function toggleLegend() {
     statusEl.classList.remove('visible');
   }
 
-  // Leaflet control — the idiomatic way to add interactive buttons to a Leaflet map
+  // Leaflet control — matches exactly how Leaflet builds its own zoom +/- buttons
   var LocateControl = L.Control.extend({
     options: { position: 'bottomright' },
     onAdd: function () {
-      btn = L.DomUtil.create('div', 'leaflet-control leaflet-control-locate leaflet-bar');
-      btn.innerHTML = '<span class="loc-icon" style="pointer-events:none">📍</span>';
+      var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+      // Use <a> with href="#" — this is how Leaflet's own zoom buttons work.
+      // On iOS Safari, <a> elements get reliable tap handling; <div> elements don't.
+      btn = L.DomUtil.create('a', 'leaflet-control-locate', container);
+      btn.href = '#';
+      btn.innerHTML = '📍';
       btn.title = 'Show my location';
       btn.setAttribute('role', 'button');
-      btn.tabIndex = 0;
-      L.DomEvent.disableClickPropagation(btn);
-      L.DomEvent.disableScrollPropagation(btn);
-      // Handle both click and touchend for iOS
-      function handleTap(e) {
-        L.DomEvent.stop(e);
+      btn.setAttribute('aria-label', 'Show my location');
+      L.DomEvent.disableClickPropagation(container);
+      L.DomEvent.on(btn, 'click', L.DomEvent.stop);
+      L.DomEvent.on(btn, 'click', function () {
         if (tracking) { stop(); } else { start(); }
-      }
-      L.DomEvent.on(btn, 'click', handleTap);
-      return btn;
+      });
+      return container;
     }
   });
   map.addControl(new LocateControl());
