@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1080">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sand Guide — Fisherman's Trail</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    width: 1080px;
-    height: 1920px;
+    width: 100vw;
+    height: 177.78vw; /* 16:9 ratio */
+    max-width: 1080px;
+    max-height: 1920px;
     font-family: 'DM Sans', -apple-system, sans-serif;
     background: linear-gradient(170deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
     color: white;
@@ -21,13 +23,13 @@
     position: absolute;
     inset: 0;
     background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-size: 20px 20px;
   }
 
   .content {
     position: relative;
     z-index: 1;
-    padding: 70px 60px 50px;
+    padding: 6% 5% 4%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -35,11 +37,11 @@
 
   .header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 3%;
   }
-  .header .trail-icon { font-size: 48px; margin-bottom: 12px; }
+  .header .trail-icon { font-size: 10vw; max-font-size: 64px; margin-bottom: 1%; }
   .header h1 {
-    font-size: 52px;
+    font-size: 10vw;
     font-weight: 700;
     letter-spacing: -1px;
     background: linear-gradient(135deg, #f5d78e, #f0a04b);
@@ -47,111 +49,121 @@
     -webkit-text-fill-color: transparent;
   }
   .header .sub {
-    font-size: 22px;
+    font-size: 4.2vw;
     color: rgba(255,255,255,0.5);
-    margin-top: 6px;
+    margin-top: 1%;
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 500;
   }
   .header .total {
-    margin-top: 18px;
-    font-size: 26px;
+    margin-top: 2.5%;
+    font-size: 4.8vw;
     color: rgba(255,255,255,0.7);
   }
   .header .total strong {
     color: #f0a04b;
-    font-size: 32px;
+    font-size: 6vw;
+  }
+
+  .divider {
+    width: 15%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #f0a04b, transparent);
+    margin: 2% auto;
+    border-radius: 2px;
   }
 
   .days {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 1.8%;
     justify-content: center;
   }
 
   .day-row {
     display: flex;
     align-items: center;
-    gap: 16px;
-    height: 100px;
+    gap: 3%;
   }
 
-  .day-label {
-    width: 80px;
+  .day-num {
+    width: 15%;
     text-align: right;
-    font-size: 22px;
+    font-size: 5.5vw;
     font-weight: 700;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.75);
     flex-shrink: 0;
+    line-height: 1;
+  }
+  .day-num span {
+    display: block;
+    font-size: 3.2vw;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+  }
+
+  .bar-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
 
   .bar-container {
-    flex: 1;
-    height: 54px;
+    height: 6.5vw;
+    max-height: 60px;
     background: rgba(255,255,255,0.06);
-    border-radius: 27px;
+    border-radius: 50px;
     position: relative;
     overflow: hidden;
   }
 
   .bar-fill {
     height: 100%;
-    border-radius: 27px;
+    border-radius: 50px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding-right: 20px;
-    min-width: 90px;
+    padding-left: 4%;
+    min-width: 18%;
     position: relative;
-    transition: width 0.5s ease;
   }
 
   .bar-pct {
-    font-size: 24px;
+    font-size: 4.5vw;
     font-weight: 700;
     color: white;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
   }
 
   .bar-fill.hi { background: linear-gradient(90deg, #d97706, #f59e0b); }
   .bar-fill.mid { background: linear-gradient(90deg, #b45309, #d97706); }
   .bar-fill.lo { background: linear-gradient(90deg, #475569, #64748b); }
 
-  .route {
-    font-size: 17px;
-    color: rgba(255,255,255,0.45);
-    width: 260px;
-    text-align: left;
-    flex-shrink: 0;
-    line-height: 1.3;
+  .route-name {
+    font-size: 3.2vw;
+    color: rgba(255,255,255,0.4);
+    padding-left: 2%;
+    line-height: 1.2;
   }
 
   .footer {
     text-align: center;
-    padding-top: 30px;
+    padding-top: 3%;
   }
   .footer .tip {
-    font-size: 20px;
+    font-size: 3.8vw;
     color: rgba(255,255,255,0.45);
-    line-height: 1.5;
+    line-height: 1.6;
   }
   .footer .tip strong { color: #f0a04b; }
   .footer .brand {
-    margin-top: 16px;
-    font-size: 18px;
+    margin-top: 2%;
+    font-size: 3.2vw;
     color: rgba(255,255,255,0.25);
     letter-spacing: 1px;
-  }
-
-  .divider {
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #f0a04b, transparent);
-    margin: 20px auto;
-    border-radius: 2px;
   }
 </style>
 </head>
@@ -163,77 +175,98 @@
     <div class="trail-icon">🏖️</div>
     <h1>How Much Sand?</h1>
     <div class="sub">Fisherman's Trail · Day by Day</div>
-    <div class="total">Overall: <strong>~36%</strong> deep sand (76 km of 212 km)</div>
+    <div class="total">Overall: <strong>~36%</strong> deep sand</div>
   </div>
 
   <div class="divider"></div>
 
   <div class="days">
     <div class="day-row">
-      <div class="day-label">Day 1</div>
-      <div class="bar-container"><div class="bar-fill hi" style="width:85%"><span class="bar-pct">85%</span></div></div>
-      <div class="route">Porto Covo → Milfontes</div>
+      <div class="day-num">Day 1<span>Porto Covo</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill hi" style="width:85%"><span class="bar-pct">85%</span></div></div>
+        <div class="route-name">→ Vila Nova de Milfontes</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 2</div>
-      <div class="bar-container"><div class="bar-fill hi" style="width:70%"><span class="bar-pct">70%</span></div></div>
-      <div class="route">Milfontes → Almograve</div>
+      <div class="day-num">Day 2<span>Milfontes</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill hi" style="width:70%"><span class="bar-pct">70%</span></div></div>
+        <div class="route-name">→ Almograve</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 3</div>
-      <div class="bar-container"><div class="bar-fill hi" style="width:55%"><span class="bar-pct">55%</span></div></div>
-      <div class="route">Almograve → Zambujeira</div>
+      <div class="day-num">Day 3<span>Almograve</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill hi" style="width:55%"><span class="bar-pct">55%</span></div></div>
+        <div class="route-name">→ Zambujeira do Mar</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 4</div>
-      <div class="bar-container"><div class="bar-fill mid" style="width:35%"><span class="bar-pct">35%</span></div></div>
-      <div class="route">Zambujeira → Odeceixe</div>
+      <div class="day-num">Day 4<span>Zambujeira</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill mid" style="width:35%"><span class="bar-pct">35%</span></div></div>
+        <div class="route-name">→ Odeceixe</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 5</div>
-      <div class="bar-container"><div class="bar-fill lo" style="width:20%"><span class="bar-pct">20%</span></div></div>
-      <div class="route">Odeceixe → Aljezur</div>
+      <div class="day-num">Day 5<span>Odeceixe</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill lo" style="width:20%"><span class="bar-pct">20%</span></div></div>
+        <div class="route-name">→ Aljezur</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 6</div>
-      <div class="bar-container"><div class="bar-fill mid" style="width:30%"><span class="bar-pct">30%</span></div></div>
-      <div class="route">Aljezur → Arrifana</div>
+      <div class="day-num">Day 6<span>Aljezur</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill mid" style="width:30%"><span class="bar-pct">30%</span></div></div>
+        <div class="route-name">→ Praia da Arrifana</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 7</div>
-      <div class="bar-container"><div class="bar-fill mid" style="width:40%"><span class="bar-pct">40%</span></div></div>
-      <div class="route">Arrifana → Carrapateira</div>
+      <div class="day-num">Day 7<span>Arrifana</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill mid" style="width:40%"><span class="bar-pct">40%</span></div></div>
+        <div class="route-name">→ Carrapateira</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 8</div>
-      <div class="bar-container"><div class="bar-fill lo" style="width:15%"><span class="bar-pct">15%</span></div></div>
-      <div class="route">Carrapateira → V. do Bispo</div>
+      <div class="day-num">Day 8<span>Carrapateira</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill lo" style="width:15%"><span class="bar-pct">15%</span></div></div>
+        <div class="route-name">→ Vila do Bispo</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 9</div>
-      <div class="bar-container"><div class="bar-fill lo" style="width:10%"><span class="bar-pct">10%</span></div></div>
-      <div class="route">V. do Bispo → Sagres</div>
+      <div class="day-num">Day 9<span>V. do Bispo</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill lo" style="width:10%"><span class="bar-pct">10%</span></div></div>
+        <div class="route-name">→ Sagres</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 10</div>
-      <div class="bar-container"><div class="bar-fill lo" style="width:20%"><span class="bar-pct">20%</span></div></div>
-      <div class="route">Sagres → Salema</div>
+      <div class="day-num">Day 10<span>Sagres</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill lo" style="width:20%"><span class="bar-pct">20%</span></div></div>
+        <div class="route-name">→ Salema</div>
+      </div>
     </div>
     <div class="day-row">
-      <div class="day-label">Day 11</div>
-      <div class="bar-container"><div class="bar-fill lo" style="width:15%"><span class="bar-pct">15%</span></div></div>
-      <div class="route">Salema → Lagos</div>
+      <div class="day-num">Day 11<span>Salema</span></div>
+      <div class="bar-area">
+        <div class="bar-container"><div class="bar-fill lo" style="width:15%"><span class="bar-pct">15%</span></div></div>
+        <div class="route-name">→ Lagos 🏁</div>
+      </div>
     </div>
   </div>
 
   <div class="divider"></div>
 
   <div class="footer">
-    <div class="tip"><strong>Days 1–3:</strong> Gaiters + trekking poles recommended<br><strong>Days 8–11:</strong> Rocky cliffs + boardwalks replace sand</div>
+    <div class="tip"><strong>Days 1–3:</strong> Gaiters + trekking poles<br><strong>Days 8–11:</strong> Rocky cliffs + boardwalks</div>
     <div class="brand">tseoeo.github.io/rota-vicentina</div>
   </div>
 
 </div>
 </body>
 </html>
-<!-- deploy trigger -->
