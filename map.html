@@ -161,7 +161,6 @@
   <label><input type="checkbox" data-layer="viewpoint" checked> Viewpoints</label>
   <label><input type="checkbox" data-layer="culture" checked> Culture &amp; history</label>
   <label><input type="checkbox" data-layer="shop" checked> Shops</label>
-  <label><input type="checkbox" data-layer="massage" checked> Massage &amp; wellness</label>
   <label><input type="checkbox" data-layer="warning"> Warnings</label>
   <label><input type="checkbox" data-layer="weather"> Weather</label>
 </div>
@@ -188,7 +187,6 @@
     <div class="legend-item"><span class="legend-dot" style="background:#8b5cf6"></span> Viewpoints</div>
     <div class="legend-item"><span class="legend-dot" style="background:#78716c"></span> Culture</div>
     <div class="legend-item"><span class="legend-dot" style="background:#16a34a"></span> Shops</div>
-    <div class="legend-item"><span class="legend-dot" style="background:#ec4899"></span> Massage</div>
   </div>
 </div>
 
@@ -225,7 +223,6 @@ const layers = {
   viewpoint: L.layerGroup(),
   culture: L.layerGroup(),
   shop: L.layerGroup(),
-  massage: L.layerGroup(),
   warning: L.layerGroup(),
   weather: L.layerGroup()
 };
@@ -420,32 +417,6 @@ const shops = [
 ];
 shops.forEach(([lat, lng, name, desc]) => {
   mkr(lat, lng, '#16a34a', 4).bindPopup(popup(name, 'shop', desc)).addTo(layers.shop);
-});
-
-// ========== MASSAGE & WELLNESS ==========
-const massage = [
-  [37.7267, -8.7828, 'Milfontes Massages', 'Deep tissue, Thai, fusion, shiatsu. Private studio. milfontesmassages.com'],
-  [37.7260, -8.7820, 'StressFreeZone', 'Mobile to your accommodation. 10+ massage types. €30–80. Also serves Almograve & Zambujeira (+€15). info@stressfreezone.pt'],
-  [37.7255, -8.7815, 'Naya Bodywork', 'Deep tissue & holistic. Studio by Mira river or mobile. Also serves Almograve, Zambujeira, Aljezur. naya-bodywork.com'],
-  [37.4340, -8.7710, 'Elsa Massage (Odeceixe)', 'Mobile spa massage & beauty. French-trained. Covers Odeceixe, Aljezur, Carrapateira. Mon–Sat 10–19h. elsa-massage-aljezur.com'],
-  [37.3157, -8.8038, 'Bodywisdom Holistic Therapies', 'Vale da Telha studio. Deep tissue, Swedish, aromatherapy, reflexology, couples. Mon–Fri 9–20, Sat 9–13. +351 931 786 218'],
-  [37.3150, -8.8030, 'Elsa Massage (Aljezur)', 'Mobile spa massage & beauty. Covers Aljezur area. Mon–Sat 10–19h. elsa-massage-aljezur.com'],
-  [37.3145, -8.8025, 'Praia do Canal Nature Retreat Spa', '5-star spa. Elemis treatments, pool, sauna. Open to non-guests — book ahead.'],
-  [37.2880, -8.8640, 'Dawn Collective Yoga Shala', 'Arrifana. Deep tissue, Shiatsu, osteopathy, physiotherapy. Daniel: +351 969 139 951, Elena: +351 912 388 044'],
-  [37.2885, -8.8635, 'Massage Aljezur by Thais Zanna', 'Deep tissue, surf massage, relaxing. Vale da Telha & Arrifana. massagealjezur@gmail.com'],
-  [37.0825, -8.9093, 'Hotel Mira Sagres Spa', 'In-hotel spa. Aromatic oil massage, muscle tension release. €25–75. Ask reception.'],
-  [37.0830, -8.9088, 'AlmaVerde Village & Spa', '~5 min drive from Vila do Bispo. Massages, facials. Open to non-guests.'],
-  [37.0070, -8.9337, 'SunBody Massage (Sagres)', 'Mobile. Relaxing, deep tissue, therapeutic, reflexology, cupping. €35–95. WhatsApp +39 339 669 8829'],
-  [37.0065, -8.9330, 'Health Massage Sagres', 'Indah — mobile physiotherapist. Sports, therapeutic, relaxation. Facebook: massagesagres'],
-  [37.0060, -8.9325, 'Finisterra Spa (Martinhal)', 'Luxury resort spa. Ayurveda, VOYA organic treatments. Open to non-guests — book ahead.'],
-  [37.0665, -8.8299, 'Heather Bain Massage (Salema)', 'Mobile from Lagos. Swedish, deep tissue, sports, Lomi Lomi. 7 days/week. +351 937 040 049'],
-  [37.1010, -8.6720, 'Heather Bain Massage (Lagos)', 'Studio: Rua Gil Eanes 19. Swedish, deep tissue, sports, Lomi Lomi, Ayurvedic, facials. 7 days. +351 937 040 049'],
-  [37.1015, -8.6725, 'Revive Massage (Lagos)', 'Marina Sol studio. Back/neck 30 min €36, full body 60 min €58, 75 min €68.'],
-  [37.1020, -8.6730, 'Belmar Spa (Lagos)', 'Aromatherapy, hot stone, jacuzzi, sauna, Turkish bath. Open to non-guests.'],
-  [37.1025, -8.6735, 'Spa Sensations Iberostar (Lagos)', 'Relaxing, Thai, Lomi Lomi, exotic treatments. spa.iberostar.com'],
-];
-massage.forEach(([lat, lng, name, desc]) => {
-  mkr(lat, lng, '#ec4899', 5).bindPopup(popup(name, 'massage', desc)).addTo(layers.massage);
 });
 
 // ========== WARNINGS ==========
